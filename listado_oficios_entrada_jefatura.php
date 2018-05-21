@@ -100,7 +100,7 @@ $totalRows_DatosOficios =$_daoInfoOficios->GetNumRows($DatosOficios);
           <ol class="breadcrumb">
             <li><a href="bien.php"><i class="fa fa-dashboard"></i> Principal</a></li>
         
-            <li class="active">Revisión Jefatura</li>
+            <li class="active">Revisión Jefatura</li> 
           </ol>
         </section>
 
