@@ -1,0 +1,19 @@
+arreglar insercion en  base de of. entrada
+
+IN-1-2018
+
+#-Año es ID
+
+Selector de fecha en ingreso de correspo.
+Reporte ID oficio al insertarlo
+
+
+EXTERNO
+
+  no oficio 
+  entidad procedencia 
+  fecha
+
+
+
+Modificar oficio de entrada

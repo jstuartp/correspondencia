@@ -1,0 +1,148 @@
+<?php require_once('Connections/conexion.php'); 
+?> <!-- accesso -->
+<?php 
+
+
+$el_usuario = GetSQLValueString(obtenerIdUsuario($_SESSION ['reservas_UserId']), "int");
+$la_seccion = obtenerIDSeccionUsuario ($el_usuario); 
+
+
+$query_totalOficios = sprintf(" SELECT count(*) as total 
+                                    FROM info_oficios " );
+$totalOficios = mysqli_query($con,  $query_totalOficios) or die(mysqli_error($con));
+$row_totalOficios = mysqli_fetch_assoc($totalOficios);
+$totalRows_totalOficios = mysqli_num_rows($totalOficios);
+
+
+$query_totalEntrada = sprintf(" SELECT count(*) as total 
+                                    FROM info_oficios WHERE tipo_oficio=1 AND id_estado = 7 
+                                    ORDER BY info_oficios.oficio_id DESC" );
+$totalEntrada = mysqli_query($con,  $query_totalEntrada) or die(mysqli_error($con));
+$row_totalEntrada = mysqli_fetch_assoc($totalEntrada);
+$totalRows_totalEntrada = mysqli_num_rows($totalEntrada);
+
+$query_totalEntradaGeneral = sprintf(" SELECT count(*) as total 
+                                    FROM info_oficios WHERE tipo_oficio=1 
+                                    ORDER BY info_oficios.oficio_id DESC" );
+$totalEntradaGeneral = mysqli_query($con,  $query_totalEntradaGeneral) or die(mysqli_error($con));
+$row_totalEntradaGeneral = mysqli_fetch_assoc($totalEntradaGeneral);
+$totalRows_totalEntradaGeneral = mysqli_num_rows($totalEntradaGeneral);
+
+$query_totalSalida = sprintf(" SELECT count(*) as total 
+                                    FROM info_oficios WHERE tipo_oficio=0  
+                                    ORDER BY info_oficios.oficio_id DESC" );
+$totalSalida = mysqli_query($con,  $query_totalSalida) or die(mysqli_error($con));
+$row_totalSalida = mysqli_fetch_assoc($totalSalida);
+$totalRows_totalSalida = mysqli_num_rows($totalSalida);
+
+
+
+/****************** SQL PARA OBTENER LOS DATOS DE LOS USUARIOS Y SUS NIVELES PARA MOSTRAR MENÚ ************/
+$query_DatosUsuariosNiveles = sprintf(" SELECT * 
+                                        FROM usuarios " );
+$DatosUsuariosNiveles= mysqli_query($con,  $query_DatosUsuariosNiveles) or die(mysqli_error($con));
+$row_DatosUsuariosNiveles = mysqli_fetch_assoc($DatosUsuariosNiveles);
+$totalRows_DatosUsuariosNiveles = mysqli_num_rows($DatosUsuariosNiveles);
+
+?>
+
+
+<aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+          <!-- Sidebar user panel -->
+            <?php include("estado_usuario.php"); ?>
+          <!-- search form -->
+         
+          <!-- /.search form -->
+          <!-- sidebar menu: : style can be found in sidebar.less -->
+          <ul class="sidebar-menu">
+            <li class="header">Menú principal </li>
+            
+            </li>
+            <li class="treeview">
+              <a href="#">
+                <i class="fa fa-files-o text-green"></i>
+                <span>Listados de Oficios</span>
+                <span class="label pull-right bg-yellow"><?php echo $row_totalOficios["total"]; ?> </span>
+              </a>
+              <ul class="treeview-menu">
+                <span class="label label-primary pull-right "><?php echo $row_totalEntrada["total"]; ?> </span>
+                <li><a href="listado_oficios_entrada.php"><i class="fa fa-folder-open text-red"></i> Oficios de Entrada</a></li>
+                 <span class="label label-primary pull-right"><?php echo $row_totalSalida["total"]; ?></span>
+                <li><a href="listado_oficios_salida.php"><i class="fa  fa-folder-open-o text-green"></i> Oficios de Salida</a></li>
+                             <span class="label label-primary pull-right"><?php echo $row_totalEntradaGeneral ["total"]; ?></span>
+               <li><a href=" listado_total_oficios_entrada.php"><i class="fa  fa-folder-open-o text-green"></i> Total Oficios de Entrada</a></li>
+               
+
+               
+
+               
+
+              </ul>
+            </li>
+              <li class="treeview">
+              <a href="#">
+                <i class="fa fa-files-o"></i>
+                <span>Oficios Asignados</span>
+                <span class="label pull-right bg-green "><?php// echo obtenerTotalOficiosAsignados($_SESSION['reservas_UserId']); ?></span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="oficios_asignados.php"><i class="fa fa-circle-o text-red"></i> Oficios Asignados</a></li>
+                <li><a href="oficios_en_tramite.php"><i class="fa fa-circle-o text-yellow"></i> Oficios en trámite</a></li>
+                <li><a href="oficios_tramitados.php"><i class="fa fa-circle-o text-green"></i> Oficios tramitados</a></li>
+               
+              </ul>
+            </li>
+            <!-- VALIDAMOS EL NIVEL DE USUARIOS PARA JEFATURA PARA QUE PURA VER LOS OFICIOS A REVISAR -->
+            <?php  if (  $la_seccion == 6 ){  ?>
+             <li class="treeview">
+              <a href="#">
+                <i class="fa fa-files-o"></i>
+                <span>Oficios Revision Jefatura</span>
+                <span class="label pull-right bg-green "><?php// echo obtenerTotalOficiosAsignados($_SESSION['reservas_UserId']); ?></span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="listado_oficios_entrada_jefatura.php"><i class="fa fa-circle-o text-red"></i> Oficios Ingreso nuevos</a></li>
+                <li><a href="listado_oficios_vistos_jefatura.php"><i class="fa fa-circle-o text-yellow"></i> Oficios Vistos por Jefatura</a></li>
+                <li><a href="listado_oficios_por_archivar.php"><i class="fa fa-circle-o text-green"></i> Oficios por Archivar /Archivados</a></li>
+               
+              </ul>
+            </li>
+            <?php } else echo ""; ?>
+             <!-- FIN VALIDAMOS EL NIVEL DE USUARIOS PARA JEFATURA PARA QUE PURA VER LOS OFICIOS A REVISAR -->
+
+             <li class="treeview">
+              <a href="#">
+                <i class="fa fa-files-o"></i>
+                <span>Ingreso|Salida Correspondencia</span>
+                <span class="label pull-right bg-green "><?php// echo obtenerTotalOficiosAsignados($_SESSION['reservas_UserId']); ?></span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="oficio_in.php"><i class="fa fa-circle-o text-red"></i> Ingresar Oficio a Sistema</a></li>
+                <li><a href="generar_oficio_salida.php"><i class="fa fa-circle-o text-yellow"></i> Oficio de Salida</a></li>
+
+               
+              </ul>
+            </li>
+             <li class="treeview">
+              <a href="#">
+                <i class="fa fa-calendar"></i> <span>Calendario Reservas </span>
+                <span class="label pull-right bg-green "><?php// echo obtenerTotalOficiosAsignados($_SESSION['reservas_UserId']); ?></span>
+              </a>
+              <ul class="treeview-menu">
+                <li><a href="reservacion_calendario.php?id=1"><i class="fa fa-circle-o text-red"></i> Reservacion Vehículo</a></li>
+                <li><a href="reservacion_calendario.php?id=5"><i class="fa fa-circle-o text-yellow"></i>Reservación Sala</a></li>
+                 
+                
+               
+              </ul>
+            </li>
+          
+                 
+      
+            
+          </ul>
+        </section>
+        <!-- /.sidebar -->
+      </aside>
