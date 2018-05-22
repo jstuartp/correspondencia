@@ -2,6 +2,9 @@
 RestringirAcceso("0,1,2,3,4,5,6,7,8,9,10,11");?> <!-- accesso -->
 
 <?php
+require "DAO_InfoOficios.php";
+
+$_daoInfoOficios = new DAO_infoOficios();
 
 $el_usuario = GetSQLValueString(obtenerIdUsuario($_SESSION ['reservas_UserId']), "int");
 
@@ -46,10 +49,15 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                         //de damos permisos 777
                         chmod($nombre_nuevo_con_carpeta,0777);// este hay que comentarlo a la hora de pasarlo a produccion
 
-$insertSQL = sprintf("INSERT into info_oficios (oficio_id2, fecha, anno, no_oficio, asunto, unidad_entidad, remitente, destinatario_in, usuario_inserta, tipo_oficio, observaciones, imagen, extension_archivos, id_estado, usuario_modifica) ( SELECT (IFNULL( MAX(oficio_id2)+1, 1) ) as oficioidtemp, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s from info_oficios where anno= %s ORDER BY oficio_id DESC) limit 0,1", 
+//Obtiene el nuevo ID                        
+$newId = $_daoInfoOficios->GetInfoOficiosUltimoId2ByYear($_POST['anno']);
+
+$insertSQL = sprintf("INSERT into info_oficios (oficio_id2, fecha, anno, no_oficio, asunto, unidad_entidad, remitente, destinatario_in, usuario_inserta, tipo_oficio, observaciones, imagen, extension_archivos, "
+        . "id_estado, usuario_modifica) Values ( %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
+               GetSQLValueString($newId, "int"),       
                GetSQLValueString($_POST['fecha'], "date"), // despues de este insertar nuevos campos recordar!!!
                GetSQLValueString($_POST['anno'], "date"),
-			   GetSQLValueString($_POST['no_oficio'], "text"),
+               GetSQLValueString($_POST['no_oficio'], "text"),
                GetSQLValueString($_POST['asunto'], "text"),
                GetSQLValueString($_POST['unidad_entidad'], "text"),
                GetSQLValueString($_POST['remitente'], "text"),
@@ -60,18 +68,17 @@ $insertSQL = sprintf("INSERT into info_oficios (oficio_id2, fecha, anno, no_ofic
                GetSQLValueString($nombre_nuevo, "text"),
                GetSQLValueString($extension, "text"),
                GetSQLValueString($_POST['id_estado'], "int"),
-               GetSQLValueString($_POST['usuario_modifica'], "int"),
-			   GetSQLValueString($_POST['anno'], "date"));
+               GetSQLValueString($_POST['usuario_modifica'], "int"));
 
-			   // echo $insertSQL;
+	//		    echo $insertSQL;
 			   
 			   $Result1 = mysqli_query($con,  $insertSQL) or die(mysqli_error($con));
-
-  $insertGoTo = "numoficio_in.php";
-  if (isset($_SERVER['QUERY_STRING'])) {
+$LastId = $_daoInfoOficios->GetInfoOficiosLastId();
+  $insertGoTo = "numoficio_in.php?id=".$LastId;
+ /* if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
     $insertGoTo .= $_SERVER['QUERY_STRING'];
-  }
+  }*/
   header(sprintf("Location: %s", $insertGoTo));
 }
 }
