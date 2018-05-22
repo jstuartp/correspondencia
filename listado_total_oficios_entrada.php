@@ -7,7 +7,9 @@ require 'DAO_InfoOficios.php';
 $_DAOInfoOficios = new DAO_infoOficios();
 
 if ($_GET){
-        $DatosOficios = $_DAOInfoOficios->GetInfoOficiosEntradaPorAnio($_GET['anno']);    
+   
+           $DatosOficios = $_DAOInfoOficios->GetInfoOficiosEntradaPorAnio($_GET['anno']);    
+                     
 } else {
     
         $DatosOficios = $_DAOInfoOficios->GetInfoOficiosEntrada();    
@@ -143,17 +145,41 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                 
 
                 <div class="box-body">
+                  <label for="">Buscar Fechas </label>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>Desde:</td>                        
+                                <td><input type="date" id="min-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Desde:"></td>
+                            </tr>
+                            <tr>
+                                <td>Hasta:</td>
+                                <td><input type="date" id="max-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Hasta:"></td>
+                            </tr>
+                        </tbody>
+                    </table>  <br>
+                    
+                    <h3>Buscar con detalle</h3>
+                    <div> 
+                        
+                        
+                        <label for="radio1">Si</label> &nbsp;<input type="radio" class="radio_control" name="busco" id="busco_true" value="true" >&nbsp;&nbsp;&nbsp;&nbsp;
+                        <label for="radio2">No</label>&nbsp;<input type="radio" class="radio_control" name="busco" id="busco_false" value="false"  >
+                    </div>    
+                    
+                    <br>
                   <table id="example2" class="table table-bordered table-hover table-condensed">
                     <thead>
                       <tr>
-                      <!--  <th>ID</th> -->
+                        <th>Id Entrada</th> 
                         <th> Oficio No.</th>
                         <th>Asunto</th>
                         <th>Remitente</th>
                         <th>Dependencia</th>
                         <th>Observaciones</th>
                        <!-- <th>Ingresado</th> -->
-                       <th>Fecha</th> 
+                       <th>Fecha</th>
+                       <th hidden="true">Fecha2</th>
                        <!-- <th>Año</th> -->
 
                          <?php 
@@ -186,7 +212,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                               
               ?>
                       <tr>
-                       <!-- <td><?php /*echo $row_DatosOficios["oficio_id2"]."-".$row_DatosOficios["anno"];*/ ?></td> -->
+                        <td><?php echo $row_DatosOficios["oficio_id2"]."-".$row_DatosOficios["anno"]; ?></td> 
                         <td><?php echo $row_DatosOficios["no_oficio"]; ?></td>
                         <td>
                           <?php 
@@ -202,8 +228,8 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         <td><?php echo $row_DatosOficios['remitente'];?> </td>
                         <td><?php echo $row_DatosOficios["unidad_entidad"];?> </td>
                         <td> <?php echo $row_DatosOficios["observaciones"];?></td>
-                        <td> <?php echo $row_DatosOficios["fecha"];?></td>
-                         
+                        <td> <?php echo date('d-m-Y', strtotime($row_DatosOficios["fecha"]));?></td>
+                        <td hidden="true"><?php echo $row_DatosOficios["fecha"];  ?></td>
 <?php 
 /*echo("                                el usuario ".$el_usuario);  echo("                                el usuario autorizado ".$usuario_autorizado_ver);*/
                          if ( $el_usuario == $usuario_autorizado_ver)
@@ -388,42 +414,112 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
     <script src="dist/js/app.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="dist/js/demo.js"></script>
+    <script src="plugins/moment/moment.js"></script>
     <!-- page script -->
-    <script>
-      $(function () {
+    <script >
+
+
+
+//if($('input[name="busco"]:checked').val()=== 'true'){
+  //      busco();
+    //    }else{
+   //         fecha();
+      //  }
+    
+
+
+ //   function fecha(){
+      
+  table = $('#example2').DataTable({
+   "paging": true,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "order": [[ 6, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
+          "order": [[ 3, "desc" ]]
+})
+
+// Extend dataTables search
+
+$.fn.dataTable.ext.search.push(
+    function( settings, data, dataIndex ) {
+        var min  = $('#min-date').val();
+        var max  = $('#max-date').val();
+        var createdAt = data[6] || 0; // Our date column in the table
+     
         
-        $('#example2').DataTable({
-          "paging": true,
+//alert(" Fecha escojo "+min+ " Fecha busco "+createdAt);
+//alert("Iguales? "+moment(createdAt).isSameOrAfter(min));
+
+     //   alert(min+" -- "+createdAt+" -- "+max);
+     //   alert(moment(createdAt).isSameOrAfter(min));
+        if  ( 
+               ( min === "" || max === "" )
+               || 
+                ( moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max) ) 
+            )
+        {
+           // alert("cumplio");
+            return true;
+        }
+        //alert(min+" -- "+createdAt+" -- "+max);
+        //alert('es igual o despues'+moment(createdAt).isSameOrAfter(min));
+        //alert('es igual o antes'+moment(createdAt).isSameOrBefore(max));
+       // alert("fallo");
+        return false;
+    }
+);
+
+// Re-draw the table when the a date range filter changes
+$('.date-range-filter').change( function() {
+   // alert("flag6 to draw");
+    table.draw();
+} );
+
+</script>
+<script>
+/*
+$('.radio_control').change( function() {
+   // alert("flag6 to draw");
+if($('input[name="busco"]:checked').val()=== 'true'){
+        location.href="listado_total_oficios_entrada.php?b=1";
+        }else{
+            location.href="listado_total_oficios_entrada.php?b=2";
+        }
+//                        location.reload();
+         
+} );
+
+function busco (){ 
+  
+  table = $('#example2').DataTable({
+   "paging": true,
           "lengthChange": true,
           "searching": true,
           "ordering": true,
           "info": true,
           "autoWidth": false,
           "order": [[ 0, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
-          "order": [[ 4, "desc" ]], 
-          // "order": [[ 0, 'asc' ], [ 1, 'asc' ]],
-          //"scrollY": 400
-        });
-      });
-  
-
-      
-      $(document).ready(function() {
-    // Setup - add a text input to each footer cell
-    $('#example2 tfoot th').each( function () {
+          "order": [[ 3, "desc" ]]
+})
+    
+    
+$('#example2 tfoot th').each( function () {
         var title = $(this).text();
         $(this).html( '<input type="text" placeholder="Buscar '+title+'" />' );
     } );
  
-    // DataTable
-    var table = $('#example2').DataTable();
+  //   DataTable;
+  //  var table = $('#example2').DataTable();
  
     // Apply the search
     table.columns().every( function () {
         var that = this;
 
  
-        $( 'input', this.footer() ).on( 'keyup change', function () {
+        $( 'input', this.footer() ).on( 'keyup change', function () { 
             if ( that.search() !== this.value ) {
                 that
                     .search( this.value )
@@ -431,7 +527,8 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
             }
         } );
     } );
-} );
+
+}
  
 /*
 initComplete: function ()
