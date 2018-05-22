@@ -47,6 +47,20 @@ class DAO_infoOficios {
         
     }
     
+    //Devuelve los datos de un registro info_oficios especifico por el ID que recibe
+    public function GetInfoOficiosById($id){
+        global $con;
+        
+        $query_DatosOficios = "SELECT * FROM info_oficios WHERE (tipo_oficio = 1 OR tipo_oficio = 2)  AND oficio_id = ".$id;
+       // echo $query_DatosOficios;
+        $DatosOficios = mysqli_query($con,  $query_DatosOficios) or die(mysqli_error($con));        
+        return $DatosOficios;
+        
+    }
+    
+    
+    
+    
     //Recibe un anio especifico y devuelve todos los oficios DE ENTRADA correspondientes a ese anio
     public function GetInfoOficiosEntradaPorAnio($anio){
         global $con;
@@ -155,5 +169,28 @@ class DAO_infoOficios {
                        
         return $DatosOficios;
     }
+    
+    //Devuelve el ultimo id valido mas 1, para ingresar un nuevo id a la tabla de InfoOficios - Recive como parametro el anio
+    public function GetInfoOficiosUltimoId2ByYear($year){
+        global $con;
+     
+        
+        $query_DatosOficios = sprintf("SELECT (IFNULL( MAX(oficio_id2)+1, 1) ) as id from info_oficios where anno= ".$year." ORDER BY oficio_id DESC limit 0,1" );
+        $DatosOficios = mysqli_query($con,  $query_DatosOficios) or die(mysqli_error($con));
+        $dato = mysqli_fetch_assoc($DatosOficios);               
+        return $dato['id'];
+    }
+    
+    public function GetInfoOficiosLastId(){
+        global $con;
+     
+        
+        $query_DatosOficios = sprintf("SELECT (MAX(oficio_id)) as id  from info_oficios WHERE tipo_oficio != 0 ORDER BY oficio_id DESC limit 0,1" );
+        $DatosOficios = mysqli_query($con,  $query_DatosOficios) or die(mysqli_error($con));
+        $dato =mysqli_fetch_assoc($DatosOficios);               
+        return $dato['id'];
+    }
+    
+    
     
 }
