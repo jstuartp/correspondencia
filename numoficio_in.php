@@ -1,11 +1,18 @@
 <?php require_once('Connections/conexion.php'); 
 RestringirAcceso("0,1,2,3,4,5,6,7,8,9,10");?> <!-- accesso -->
 <?php 
+require 'DAO_InfoOficios.php';
+
+$_daoInfoOficios = new DAO_infoOficios();
+
+$_id = $_GET['id'];
+$DatosOficioIN = $_daoInfoOficios->GetInfoOficiosById($_id);
+    
 
 
 //correccion de consulta
-$query_DatosOficioIN = sprintf("SELECT * FROM info_oficios WHERE (tipo_oficio=1 OR tipo_oficio=2) AND id_estado = 7 order by oficio_id desc limit 0,1" );
-$DatosOficioIN = mysqli_query($con,  $query_DatosOficioIN) or die(mysqli_error($con));
+//$query_DatosOficioIN = sprintf("SELECT * FROM info_oficios WHERE (tipo_oficio=1 OR tipo_oficio=2) AND id_estado = 1 order by oficio_id desc limit 0,1" );
+//$DatosOficioIN = mysqli_query($con,  $query_DatosOficioIN) or die(mysqli_error($con));
 $row_DatosOficioIN = mysqli_fetch_assoc($DatosOficioIN);
 $totalRows_DatosOficioIN = mysqli_num_rows($DatosOficioIN);
 
