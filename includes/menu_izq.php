@@ -128,11 +128,11 @@ $totalRows_DatosItems = mysqli_num_rows($DatosItems);
               </a>
               <ul class="treeview-menu">
               <span class="label label-primary pull-right"><?php echo cuentaOficiosAsignados2($el_usuario  ); ?> </span>
-                <li><a href="oficios_asignados.php"><i class="fa fa-circle-o text-red"></i> Oficios Asignados</a></li>
+                <li><a href="oficios_en_tramite.php?tipo=1"><i class="fa fa-circle-o text-red"></i> Oficios Asignados</a></li>
                 <span class="label label-primary pull-right"><?php echo cuentaOficiosTramite($el_usuario  ); ?>  </span>
-                <li><a href="oficios_en_tramite.php"><i class="fa fa-circle-o text-yellow"></i> Oficios en trámite</a></li>
+                <li><a href="oficios_en_tramite.php?tipo=2"><i class="fa fa-circle-o text-yellow"></i> Oficios en trámite</a></li>
                 <span class="label label-primary pull-right"><?php echo cuentaOficiosTramitados($el_usuario  ); ?>   </span>
-                <li><a href="oficios_tramitados.php"><i class="fa fa-circle-o text-green"></i> Oficios tramitados</a></li>
+                <li><a href="oficios_en_tramite.php?tipo=3"><i class="fa fa-circle-o text-green"></i> Oficios tramitados</a></li>
               </ul>
             </li>
             <!-- VALIDAMOS EL NIVEL DE USUARIOS PARA JEFATURA PARA QUE PUEDA VER LOS OFICIOS A REVISAR -->
