@@ -193,4 +193,20 @@ class DAO_infoOficios {
     
     
     
+    //Cambia el estado del oficio de salida en la base de datos
+    public function CambiaEstadoOficioSalida($idOficio,$idEstado,$Observaciones){
+        global $con;
+        
+        $insertSQL = sprintf("UPDATE info_Oficios SET id_estado= %s, observaciones= %s WHERE oficio_id= ".$idOficio ,
+                                       
+                     GetSQLValueString($idEstado, "int"),
+                     GetSQLValueString($Observaciones, "text"));
+
+        $DatosOficios = mysqli_query($con,  $insertSQL) or die(mysqli_error($con));
+
+//               
+    }
+    
+    
+    
 }
