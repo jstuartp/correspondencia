@@ -142,9 +142,8 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
 
                    ?>
                 </div><!-- /.box-header -->
-                
-
-                <div class="box-body">
+                <div class="row">
+                <div class="col-md-8" >
                   <label for="">Buscar Fechas </label>
                     <table>
                         <tbody>
@@ -158,16 +157,16 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                             </tr>
                         </tbody>
                     </table>  <br>
-                    
-                    <h3>Buscar con detalle</h3>
-                    <div> 
+                    </div>
+                    <div class="col-md-4">
+                        <a class="btn btn-primary " href="listado_total_oficios_entradaDetalles.php" id="detalle" ><i class="fa fa-plus"></i> Busqueda con detalles</a>
                         
-                        
-                        <label for="radio1">Si</label> &nbsp;<input type="radio" class="radio_control" name="busco" id="busco_true" value="true" >&nbsp;&nbsp;&nbsp;&nbsp;
-                        <label for="radio2">No</label>&nbsp;<input type="radio" class="radio_control" name="busco" id="busco_false" value="false"  >
-                    </div>    
+                    </div>
                     
                     <br>
+                </div>
+                <div class="box-body">
+                    
                   <table id="example2" class="table table-bordered table-hover table-condensed">
                     <thead>
                       <tr>
@@ -418,18 +417,6 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
     <!-- page script -->
     <script >
 
-
-
-//if($('input[name="busco"]:checked').val()=== 'true'){
-  //      busco();
-    //    }else{
-   //         fecha();
-      //  }
-    
-
-
- //   function fecha(){
-      
   table = $('#example2').DataTable({
    "paging": true,
           "lengthChange": true,
@@ -479,92 +466,7 @@ $('.date-range-filter').change( function() {
 } );
 
 </script>
-<script>
-/*
-$('.radio_control').change( function() {
-   // alert("flag6 to draw");
-if($('input[name="busco"]:checked').val()=== 'true'){
-        location.href="listado_total_oficios_entrada.php?b=1";
-        }else{
-            location.href="listado_total_oficios_entrada.php?b=2";
-        }
-//                        location.reload();
-         
-} );
 
-function busco (){ 
-  
-  table = $('#example2').DataTable({
-   "paging": true,
-          "lengthChange": true,
-          "searching": true,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
-          "order": [[ 0, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
-          "order": [[ 3, "desc" ]]
-})
-    
-    
-$('#example2 tfoot th').each( function () {
-        var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Buscar '+title+'" />' );
-    } );
- 
-  //   DataTable;
-  //  var table = $('#example2').DataTable();
- 
-    // Apply the search
-    table.columns().every( function () {
-        var that = this;
-
- 
-        $( 'input', this.footer() ).on( 'keyup change', function () { 
-            if ( that.search() !== this.value ) {
-                that
-                    .search( this.value )
-                    .draw();
-            }
-        } );
-    } );
-
-}
- 
-/*
-initComplete: function ()
-{
-  var r = $('#example2 tfoot tr');
-  r.find('th').each(function(){
-    $(this).css('padding', 8);
-  });
-  $('#example2 thead').append(r);
-  $('#search_0').css('text-align', 'center');
-},*/
-     
-/*
- $('#example2 thead th').each( function () {
-        var title = $('#example tfoot th').eq( $(this).index() ).text();
-        $(this).html( '&amp;lt;input type=&amp;quot;text&amp;quot; placeholder=&amp;quot;Buscar '+title+'&amp;quot; /&amp;gt;' );
-    } );
- 
-    // DataTable
-    var table = $('#example2').DataTable();
- 
-    // Apply the search
-    table.columns().eq( 0 ).each( function ( colIdx ) {
-        $( 'input', table.column( colIdx ).header() ).on( 'keyup change', function () {
-            table
-                .column( colIdx )
-                .search( this.value )
-                .draw();
-        } );
-    } );
-} );
- */
-      
-      
-      
-    </script>
 
     <script>
 
