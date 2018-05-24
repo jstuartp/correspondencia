@@ -3,14 +3,27 @@ require 'DAO_infoOficios.php';
 
 //recibe el identificador para saber que funcion disparar
 $flag = $_GET['flag'];
-$imagen = $_FILES['imagen']['tmp_name'];  //copia los valores del archivo para guardar los datos
-$nombre_orig = $_FILES['imagen']['name'];
-$id = $_POST['id'];
+
+
 
 //verifica la bandera y activa la funcion que corresponde
 if($flag == 1){
+    $id = $_POST['id'];
+    $imagen = $_FILES['imagen']['tmp_name'];  //copia los valores del archivo para guardar los datos
+    $nombre_orig = $_FILES['imagen']['name'];
     $_infoOficiosControler = new infoOficios_Controller();   //nuevo objeto de la clase
     $_infoOficiosControler->InsertarArchivoSalida($imagen,$nombre_orig,$id);
+}else {
+    if($flag == 2){
+        $_infoOficiosControler = new infoOficios_Controller();   //nuevo objeto de la clase
+        
+        $_infoOficiosControler->CambiaEstadoOficioSalida($_POST['hidden_id_oficio'], $_POST['id_estado'], $_POST['resp_usuario']);
+        
+        header(sprintf("Location: %s", "listado_oficios_salida.php"));
+        
+        
+    }
+    
 }
 
 /*
@@ -61,4 +74,14 @@ class infoOficios_Controller {
         header(sprintf("Location: %s", "listado_oficios_salida.php"));  //Regresa al listado
     }
     }
+    
+    //Funcion para cambiar el valor del estado de los oficios de salida
+    public function CambiaEstadoOficioSalida($idOficio,$idEstado,$Observaciones){
+      $DAO_InfoOficios = new DAO_infoOficios();
+      $DAO_InfoOficios->CambiaEstadoOficioSalida($idOficio, $idEstado, $Observaciones);
+        
+    }
+    
+    
+   
 }
