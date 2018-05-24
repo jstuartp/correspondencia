@@ -40,7 +40,7 @@ $insertSQL = sprintf("UPDATE oficios_usuario SET id_estado=%s, resp_usuario=%s, 
   /* Actualizacion del estado del oficio en la tabla info_oficios STUART*/
 $updateSQL = sprintf("UPDATE info_oficios SET id_estado=%s WHERE  oficio_id=$el_oficio ",
             GetSQLValueString($_POST['id_estado'], "int"));
-echo $updateSQL;
+//echo $updateSQL;
 $Result1 = mysqli_query($con, $updateSQL) or die(mysqli_error($con));
 
 //NO SE ACTUALIZA EL ESTADO DEL OFICIO EN LA TABLA INFO_OFICIOS, SOLO EN LA REFERENCIA QUE TIENE LA TABLA OFICIOS_USUARIO CREO QUE SE DEBE CORREGIR
@@ -123,7 +123,7 @@ $updateSQL = sprintf("UPDATE oficios_usuario SET id_oficioin=%s, usuario_id=%s, 
                        GetSQLValueString($_POST['detalle_traslado'], "text"),
                        GetSQLValueString($_POST['fecha_traslado'], "date"),
                        GetSQLValueString($_POST['id_oficiousua'], "int"));
-echo $updateSQL;
+//echo $updateSQL;
 $Result1 = mysqli_query($con, $updateSQL) or die(mysqli_error($con));
 
 
@@ -490,19 +490,13 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
           
  <form action="<?php echo $editFormAction; ?>" method="post" name="form1" id="form1" onSubmit="javascript:return validaralta(); ">
        <div class="row">
-             
-                            <?php 
-
- 
-                               //Asignado   OR   //Traslado
-                        //    if (($estado==1)or($estado==8)) 
-
-                          //    { ?> 
-
                     <div class="col-md-4"> 
-
-                       
-
+                                  <label>
+                              <input name="id_estado" type="radio" id="radio" value="1" />
+                              </label>
+                              <strong > Proceso Administrativo 
+                    </div>
+                    <div class="col-md-4"> 
                               <label>
                               <input name="id_estado" type="radio" id="radio" value="2" checked />
                               </label>
@@ -510,16 +504,9 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                     </div>
                     <div class="col-md-4"> 
                               <label>
-                              <input name="id_estado" type="radio" id="radio" value="3" />
-                              </label>
-                              <strong > Pendiente de Trámite 
-                    </div>
-                                  
-                    <div class="col-md-4"> 
-                              <label>
                               <input name="id_estado" type="radio" id="radio" value="4" />
                               </label>
-                                  <strong > Esperando Respuesta 
+                              <strong > Esperando Respuesta 
                     </div>
                     <div class="col-md-4"> 
                               <label>
@@ -527,25 +514,13 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                               </label>
                               <strong > Finalizado 
                     </div>
-                                  
-                    <div class="col-md-4"> 
-                                  <label>
-                              <input name="id_estado" type="radio" id="radio" value="6" />
-                              </label>
-                              <strong > Revisión Doctor 
-                    </div>
                     <div class="col-md-4"> 
                                   <label>
                               <input name="id_estado" type="radio" id="radio" value="7" />
                               </label>
                               <strong > Devuelto 
                     </div>
-                    <div class="col-md-4"> 
-                                  <label>
-                              <input name="id_estado" type="radio" id="radio" value="1" />
-                              </label>
-                              <strong > Proceso Administrativo 
-                    </div>
+
                                                             
                                                    
                   </div> <?php// } else if (($estado==2)/*En tramite*/or($estado==8)/*Traslado*/) 
