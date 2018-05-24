@@ -146,6 +146,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         <th>Dependencia</th>
                         <th>Fecha</th>
                         <th hidden="true">Fecha2</th>
+                        <th>Estado</th>
                         <th>Imprime/Modifica</th>
 
                         <?php
@@ -182,6 +183,87 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         
                         <td><?php echo date('d-m-Y', strtotime($row_DatosOficios["fecha"]));  ?></td>
                         <td hidden="true"><?php echo $row_DatosOficios["fecha"];  ?></td>
+                        
+                        <td>  <!-- CODIGO PUESTO POR STUART -->
+                              <?php //PASAR POR TODOS LOS ESTADOS PARA PONER LA IMAGEN QUE CORRESPONDA Y EL TEXTO
+
+                        if ($row_DatosOficios["id_estado"] == 1)
+                        {
+                          ?>
+                            <button type="button" class="btn btn-primary change"  data-id-in="<?php echo $row_DatosOficios["oficio_id"];?>" 
+                                    data-date="<?php echo date('d-m-Y', strtotime($row_DatosOficios["fecha"]));  ?>" 
+                                    data-name="<?php echo $config['nomeclatura_dependencia'] . $row_DatosOficios["oficio_id1"] ."-". $row_DatosOficios["anno"]; ?>">
+                                <span class="glyphicon glyphicon-eye-open"></span> Proceso Administrativo </button>
+                         <!--   <a class="btn btn-primary "  data-toggle="modal" data-target="#modalCambiaEstado" > -->
+                             <!-- <span class="glyphicon glyphicon-eye-open"></span> Proceso Administrativo -->
+                            </a> 
+                        <?php 
+                        }  else if ($row_DatosOficios["id_estado"] == 2 )
+                        
+                        { ?>
+                            <a data-toggle="modalCambiaEstado" class="btn btn-warning change" data-id-in="<?php echo $row_DatosOficios["oficio_id"];?>" 
+                                    data-date="<?php echo date('d-m-Y', strtotime($row_DatosOficios["fecha"]));  ?>" 
+                                    data-name="<?php echo $config['nomeclatura_dependencia'] . $row_DatosOficios["oficio_id1"] ."-". $row_DatosOficios["anno"]; ?>">
+                              <span class="glyphicon glyphicon-folder-open"></span> En Trámite
+                            </a>  
+                         
+                        <?php }
+
+                        else if ($row_DatosOficios["id_estado"] == 3 )
+                        { ?>
+                            <a href="" class="btn btn-danger change" data-id-in="<?php echo $row_DatosOficios["oficio_id"];?>" 
+                                    data-date="<?php echo date('d-m-Y', strtotime($row_DatosOficios["fecha"]));  ?>" 
+                                    data-name="<?php echo $config['nomeclatura_dependencia'] . $row_DatosOficios["oficio_id1"] ."-". $row_DatosOficios["anno"]; ?>">
+                                <span class="glyphicon glyphicon-time"></span> Pendiente de Trámite
+                            </a>
+                        <?php 
+                        }
+
+                        else if ($row_DatosOficios["id_estado"] == 4 )
+                        {
+                          ?>
+                          <a href="" class="btn label-warning change" data-id-in="<?php echo $row_DatosOficios["oficio_id"];?>" 
+                                    data-date="<?php echo date('d-m-Y', strtotime($row_DatosOficios["fecha"]));  ?>" 
+                                    data-name="<?php echo $config['nomeclatura_dependencia'] . $row_DatosOficios["oficio_id1"] ."-". $row_DatosOficios["anno"]; ?>">
+                                <span class="glyphicon glyphicon-question-sign"></span> Esperando Respuesta
+                            </a>
+                      <?php
+                        }
+                        
+                        else if ($row_DatosOficios["id_estado"] == 5 )
+                        {
+                          ?>
+                          <a  class="btn label-success " >
+                                <span class="glyphicon glyphicon-ok"></span> Finalizado
+                            </a>
+                      <?php
+                        }
+                        
+                        else if ($row_DatosOficios["id_estado"] == 6 )
+                        {
+                          ?>
+                          <a href="" class="btn label-info change" data-id-in="<?php echo $row_DatosOficios["oficio_id"];?>" 
+                                    data-date="<?php echo date('d-m-Y', strtotime($row_DatosOficios["fecha"]));  ?>" 
+                                    data-name="<?php echo $config['nomeclatura_dependencia'] . $row_DatosOficios["oficio_id1"] ."-". $row_DatosOficios["anno"]; ?>">
+                                <span class="glyphicon glyphicon-eye-open"></span> Revisión Doctor
+                            </a>
+                      <?php
+                        }
+                        
+                        else if ($row_DatosOficios["id_estado"] == 7 )
+                        {
+                          ?>
+                          <a href="" class="btn label-warning change" data-id-in="<?php echo $row_DatosOficios["oficio_id"];?>" 
+                                    data-date="<?php echo date('d-m-Y', strtotime($row_DatosOficios["fecha"]));  ?>" 
+                                    data-name="<?php echo $config['nomeclatura_dependencia'] . $row_DatosOficios["oficio_id1"] ."-". $row_DatosOficios["anno"]; ?>">
+                                <span class="glyphicon glyphicon-refresh"></span> Devuelto
+                            </a>
+                      <?php
+                        }
+
+                         ?>
+                              <!-- CODIGO PUESTO POR STUART -->
+                          </td>
                         
           <!-- LINK PARA IMPRIMIR EL OFICIO -->
 
@@ -254,40 +336,90 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                     
 
                     
-<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
+<!-- MODAL PARA CAMBIAR EL ESTADO AL OFICIO -->                    
+<!-- Modal que contiene los nombres de los usuarios cambiar estado al oficio-->
+
+<div class="modal fade" id="ModalCambiaEstado" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                  <div class="alert alert-info alert-dismissable ">
-                    <h4>Subir Oficio Recibido </h4>
-                    
-                  </div> 
+        
       </div>
-      <!-- body del modal con los datos de los usuarios para trasladar el oficio -->
-                <div class="modal-body">
-                        <?php   ?>
+      <div class="modal-body">
+        <?php //echo $el_oficio;  ?>
 
-                 <!-- inicio del modal -->              
-                          
-                 <form action="infoOficios_Controller.php?flag=1" method="post" enctype="multipart/form-data" name="form2" id="form2" >
-                       <div class="row">
-                           <div class="col-md-4"> 
-                            <div class="form-group">
-                                <label for="exampleInputFile">Subir Oficio Recibido</label>
-                                <input type="file" id=imagen  name="imagen"><?php echo "hola:".$row_DatosOficios['oficio_id'];?>
-                                <input type="hidden" name="id" id="id" value="<?php $row_DatosOficios['oficio_id']; ?>" />
-                                
-                            </div>
-                           </div>
-                       </div>
-                     <input type="submit" value="Insertar Oficio" id="form2" />
-                     <input type="hidden" name="MM_insert" value="form2" />
-                 </form>
-                 </div>
-      </div>
+ <!-- inicio del modal -->
+                  <div class="callout callout-info">
+                      <h4>Cambiar estado del oficio | <label id="Oficio_numero"> </label> </h4> 
+                    <p>Fecha de ingreso: <label id="Oficio_fecha"> </label> </p>
+                  </div>             
+          
+ <form action="InfoOficios_Controller.php?flag=2" method="post" name="formCambiaEstado" id="formCambiaEstado" >
+       <div class="row">
+                    <div class="col-md-4"> 
+                              <label>
+                              <input name="id_estado" type="radio" id="radio" value="1" />
+                              </label>
+                              <strong > Proceso Administrativo 
+                    </div>
+                     <div class="col-md-4"> 
+                              <label>
+                              <input name="id_estado" type="radio" id="radio" value="2" checked />
+                              </label>
+                              <strong > En Trámite 
+                    </div>              
+                    <div class="col-md-4"> 
+                              <label>
+                              <input name="id_estado" type="radio" id="radio" value="4" />
+                              </label>
+                                  <strong > Esperando Respuesta 
+                    </div>
+                    <div class="col-md-4"> 
+                              <label>
+                              <input name="id_estado" type="radio" id="radio" value="5" />
+                              </label>
+                              <strong > Finalizado 
+                    </div>
+                    <div class="col-md-4"> 
+                                  <label>
+                              <input name="id_estado" type="radio" id="radio" value="7" />
+                              </label>
+                              <strong > Devuelto 
+                    </div>
+
+                                                            
+                                                   
+        </div> 
+        
+  <br><br>
+                    <div class="form-group">
+                      <label for="observacion">Comentario de: | <?php echo obtenerNombre($el_usuario); ?>  </label>
+                      <input type="text" class="form-control" id="resp_usuario" placeholder="Respuesta Usuario" name="resp_usuario" value="">
+                    </div>
+                 </table>
+                  <input name="hidden_id_oficio" type="hidden" id="hidden_id_oficio"  />
+                  <input type="hidden" name="MM_insert" value="formCambiaEstado" />
+                  <br>
+
+
+                
+        <!-- FIN LISTADO DE LOS USUARIOS-->
+        </div>
+
+      
+      <div class="modal-footer">
+     
+        <button type="submit" class="btn btn-primary btn-block btn-flat">Cambiar Estado</button>
+        </form>
       </div>
     </div>
+  </div>
+</div>                    
+  
+<!-- FIN MODAL PARA CAMBIAR ESTADO AL OFICIO -->                   
+
+
                     
                     
                     
@@ -460,6 +592,29 @@ $(function(){
         return false;
     });
 })
+
+
+
+
+$(function(){
+$(".change").click(function(e) {
+ //   $(document.body).on('click','.view-pdf',function(){
+       
+        var id_in = $(this).attr('data-id-in');
+        var name_in = $(this).attr('data-name');
+        var date_in = $(this).attr('data-date');
+        $('input[name="hidden_id_oficio"]').val(id_in);
+        $('input[name="hidden_id_oficio"]').html(id_in);
+       //$("hidden_id_oficio").val(id_in);
+       $('#Oficio_numero').html(name_in); 
+      $('#Oficio_fecha').html(date_in);
+       
+        $('#ModalCambiaEstado').modal('show');
+  
+        return false;
+    });
+})
+
 
 
 
