@@ -33,8 +33,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
     $_anio = date('Y',$_fecha);
     
     //Consulta para insertar datos del oficio a la base de datos
-$insertSQL = sprintf("INSERT into info_oficios (oficio_id1, anno, destinatario, asunto, usuario_inserta, tipo_oficio, cuerpo_oficio, cc_copia, id_jefatura,fecha,remitente,unidad_entidad) 
-( SELECT (IFNULL( MAX(oficio_id1)+1, 1) ) as oficioidtemp, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s from info_oficios where anno=%s ORDER BY oficio_id DESC) limit 0,1",
+$insertSQL = sprintf("INSERT into info_oficios (oficio_id1, anno, destinatario, asunto, usuario_inserta, tipo_oficio, cuerpo_oficio, cc_copia, id_jefatura,fecha,remitente,unidad_entidad, id_estado) 
+( SELECT (IFNULL( MAX(oficio_id1)+1, 1) ) as oficioidtemp, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s, %s from info_oficios where anno=%s ORDER BY oficio_id DESC) limit 0,1",
 
                         GetSQLValueString($_anio, "date"),
                         GetSQLValueString($_POST['destinatario'], "text"),
@@ -47,6 +47,7 @@ $insertSQL = sprintf("INSERT into info_oficios (oficio_id1, anno, destinatario, 
                         GetSQLValueString($_POST['fecha'], "date"),
                         GetSQLValueString($_POST['remitente'], "text"),
                         GetSQLValueString($_POST['unidad_entidad'], "text"),
+                        GetSQLValueString($_POST['id_estado'], "text"),
                         GetSQLValueString($_anio, "date"));
  //echo $insertSQL ." nombre: ". $row_DatosUsuarios['nombre']. "<br>" ;
  //$row_DatosUsuarios = mysqli_fetch_assoc($DatosUsuarios);
@@ -209,6 +210,7 @@ $insertSQL = sprintf("INSERT into info_oficios (oficio_id1, anno, destinatario, 
                     <input name="id_estado" type="hidden" id="tipo_oficio" value="0" />
                     <input name="anno" type="hidden" id="anno" value="<?php echo date('Y')?>" />
                     <input name="usuario_inserta" type="hidden" id="usuario_inserta" value="<?php echo $el_usuario; ?>" />
+                    <input name="id_estado" type="hidden" id="id_estado" value="1" />
                     <button type="submit" class="btn btn-primary">Crear Oficio Salida</button>
                     <input type="hidden" name="MM_insert" value="form1" />
                   </form>
