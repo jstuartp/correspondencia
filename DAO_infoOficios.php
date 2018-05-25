@@ -119,7 +119,7 @@ class DAO_infoOficios {
         
         global $con;
         
-        $query = "SELECT * FROM info_oficios WHERE info_oficios.id_estado=1 and info_oficios.oficio_id 
+        $query = "SELECT * FROM info_oficios WHERE info_oficios.tipo_oficio !=0 and info_oficios.id_estado=1 and info_oficios.oficio_id 
                                 NOT IN
                                       (SELECT oficios_usuario.id_oficioin
                                        FROM oficios_usuario)";
