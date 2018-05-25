@@ -146,8 +146,8 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                 <div class="col-md-8" >
                                      
                     </div>
-                    <div class="col-md-4">
-                        <a class="btn btn-primary " href="listado_total_oficios_entrada.php" id="detalle" ><i class="fa fa-plus"></i> Busqueda por rango de Fecha</a>
+                    <div class="col-md-4 " ><span class="pull-right">
+                            <a class="btn btn-primary " href="listado_total_oficios_entrada.php" id="detalle" ><i class="fa fa-plus"></i> Busqueda por rango de Fecha</a> </span>
                         
                     </div>
                     
@@ -191,7 +191,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         <th >Movimientos</th>
                         <th>Estado</th>
                          <?php } ?>
-
+                        <th hidden="true">Fecha2</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -351,7 +351,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         <?php  }?>
 
                         <!-- FIN ****** VALORAMOS EL NIVEL Y LA SECCION DEL USUARIO PARA PERMITIRLE PODER VER LOS MOVIMIENTOS DE LOS OFICIOS WCG-->
-                        
+                        <td hidden="true"><?php echo $row_DatosOficios["fecha"];  ?></td>
                       </tr>
 
                       <?php 
@@ -376,9 +376,10 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         <th>Dependencia</th>
                         <th>Observaciones</th>
                         <th>Fecha</th>
-                        <th>PDF</th>
-                        <th>Movimientos</th>
+                        <th >PDF</th>
+                        <th >Movimientos</th>
                         <th>Estado</th>
+                        <th hidden="true"></th>
             </tr>
         </tfoot> 
                   </table> 
@@ -418,8 +419,8 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
           "ordering": true,
           "info": true,
           "autoWidth": false,
-          "order": [[ 6, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
-          "order": [[ 3, "desc" ]]
+          "order": [[ 10, "desc" ],[ 0, "desc" ]]
+           // orden de los resultados primero columna 0 los IN y luego por año columna 3        
 })
     
     
@@ -428,7 +429,8 @@ $(document).ready(function() {
     // Setup - add a text input to each footer cell
     $('#example2 tfoot th').each( function () {
         var title = $(this).text();
-        $(this).html( '<input type="text" placeholder="Buscar '+title+'" />' );
+        if((title != 'Fecha2')&&(title != 'PDF')&&(title != 'Movimientos')){
+        $(this).html( '<input type="text" size="15" placeholder="Buscar '+title+'" />' );}
     } );
  $('#example2 tfoot tr').appendTo('#example2 thead');
  
