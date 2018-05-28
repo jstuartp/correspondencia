@@ -112,8 +112,8 @@ $totalRows_DatosItems = mysqli_num_rows($DatosItems);
                 <span class="label pull-right bg-yellow"><?php echo $row_totalOficios["total"]; ?> </span>
               </a>
               <ul class="treeview-menu">
-                <span class="label label-primary pull-right "><?php echo $row_totalEntrada["total"]; ?> </span>
-                <li><a href="listado_oficios_entrada.php"><i class="fa fa-folder-open text-red"></i> Oficios recién ingresados</a></li>
+          <!--      <span class="label label-primary pull-right "><?php //echo $row_totalEntrada["total"]; ?> </span>  -->
+          <!--      <li><a href="listado_oficios_entrada.php"><i class="fa fa-folder-open text-red"></i> Oficios recién ingresados</a></li> -->
                  <span class="label label-primary pull-right"><?php echo $row_totalSalida["total"]; ?></span>
                 <li><a href="listado_oficios_salida.php"><i class="fa  fa-folder-open-o text-green"></i> Total Oficios de Salida</a></li>
                              <span class="label label-primary pull-right"><?php echo $row_totalEntradaGeneral ["total"]; ?></span>
