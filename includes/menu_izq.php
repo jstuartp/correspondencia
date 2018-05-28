@@ -115,9 +115,22 @@ $totalRows_DatosItems = mysqli_num_rows($DatosItems);
           <!--      <span class="label label-primary pull-right "><?php //echo $row_totalEntrada["total"]; ?> </span>  -->
           <!--      <li><a href="listado_oficios_entrada.php"><i class="fa fa-folder-open text-red"></i> Oficios recién ingresados</a></li> -->
                  <span class="label label-primary pull-right"><?php echo $row_totalSalida["total"]; ?></span>
-                <li><a href="listado_oficios_salida.php"><i class="fa  fa-folder-open-o text-green"></i> Total Oficios de Salida</a></li>
+                    <li><a href="#"><i class="fa  fa-files-o text-green"></i> Buscar Oficios de Salida</a>
+                
+                        <ul class="treeview-menu">
+                            <li><a href="listado_oficios_salida.php"><i class="fa  fa-folder-open-o text-green"></i>Por Palabra Clave</a></li>
+                            <li><a href="listado_oficios_salidaFechas.php"><i class="fa  fa-folder-open-o text-green"></i>Por Rango Fechas</a></li>
+                            <li><a href="listado_oficios_salidaDetalles.php"><i class="fa  fa-folder-open-o text-green"></i>Avanzada</a></li>
+                        </ul>
+                    </li>
                              <span class="label label-primary pull-right"><?php echo $row_totalEntradaGeneral ["total"]; ?></span>
-               <li><a href=" listado_total_oficios_entrada.php"><i class="fa  fa-folder-open-o text-green"></i> Total Oficios de Entrada</a></li>
+               <li><a href=" #"><i class="fa  fa-files-o text-green"></i> Buscar Oficios de Entrada</a>
+                        <ul class="treeview-menu">
+                            <li><a href="listado_total_oficios_entrada.php"><i class="fa  fa-circle-o text-green"></i>Por Palabra Clave</a></li>
+                            <li><a href="listado_total_oficios_entradaFechas.php"><i class="fa  fa-circle-o text-green"></i>Por Rango Fechas</a></li>
+                            <li><a href="listado_total_oficios_entradaDetalles.php"><i class="fa  fa-circle-o text-green"></i>Avanzada</a></li>
+                        </ul>  
+               </li>
               </ul>
             </li>
               <li class="treeview">
