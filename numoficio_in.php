@@ -74,7 +74,7 @@ $totalRows_DatosOficioIN = mysqli_num_rows($DatosOficioIN);
              <?php echo $config['nombre_institucion'];?>    <!-- LLAMADO DEL TITULO UNIDAD PEQUEÑO -->
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Principal</a></li>
+            <li><a href="bien.php"><i class="fa fa-dashboard"></i> Principal</a></li>
             <li><a href="#">Tablas</a></li>
             <li class="active">Tablas de contenido</li>
           </ol>
@@ -98,7 +98,13 @@ $totalRows_DatosOficioIN = mysqli_num_rows($DatosOficioIN);
           <h3 class="box-title">Fecha y hora de ingreso : <?php echo $row_DatosOficioIN['fecha']." |  Ingresado por: ". obtenerNombre ($row_DatosOficioIN['usuario_inserta']); ?></h3>
         </div><!-- /.box-header -->
         <div class="box-body">
-          <h1>El ID de ingreso es: <?php  echo $row_DatosOficioIN['oficio_id2']."-".$row_DatosOficioIN['anno']. "<br>No. Oficio: ". $row_DatosOficioIN['no_oficio'];?> </h1>
+             <div class="row">
+                <div class="col-md-8" >
+                    <h1>El ID de ingreso es: <?php  echo $row_DatosOficioIN['oficio_id2']."-".$row_DatosOficioIN['anno']. "<br>No. Oficio: ". $row_DatosOficioIN['no_oficio'];?> </h1></div>
+                 <div class="col-md-4"><span class="pull-right">
+                         <a class="btn btn-primary btn-default " href="oficio_in.php" id="volver" ><i class="fa fa-dashboard"></i> Volver</a> </span>
+                        
+                    </div>
         </div><!-- /.box-body -->
 
         <div class="embed-responsive embed-responsive-4by3">
