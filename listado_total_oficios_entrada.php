@@ -158,8 +158,8 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         </tbody>
                     </table>  <br>
                     </div>
-                    <div class="col-md-4">
-                        <a class="btn btn-primary " href="listado_total_oficios_entradaDetalles.php" id="detalle" ><i class="fa fa-plus"></i> Busqueda con detalles</a>
+                    <div class="col-md-4"><span class="pull-right">
+                            <a class="btn btn-primary " href="listado_total_oficios_entradaDetalles.php<?php if($_GET){echo ("?anno=".$_GET['anno']);} ?>" id="detalle" ><i class="fa fa-plus"></i> Busqueda con detalles</a> </span>
                         
                     </div>
                     
@@ -171,7 +171,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                     <thead>
                       <tr>
                         <th>Id Entrada</th> 
-                        <th> Oficio No.</th>
+                        <th>Oficio No.</th>
                         <th>Asunto</th>
                         <th>Remitente</th>
                         <th>Dependencia</th>
@@ -376,15 +376,16 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
            </tbody>
                    <tfoot>
             <tr>
-                <th> Oficio No.</th>
-                        <th>Asunto</th>
-                        <th>Remitente</th>
-                        <th>Dependencia</th>
-                        <th>Observaciones</th>
-                        <th>Fecha</th>
-                        <th>PDF</th>
-                        <th>Movimientos</th>
-                        <th>Estado</th>
+                <th>Id Entrada</th>
+                <th>Oficio No.</th>
+                <th>Asunto</th>
+                <th>Remitente</th>
+                <th>Dependencia</th>
+                <th>Observaciones</th>
+                <th>Fecha</th>
+                <th>PDF</th>
+                <th>Movimientos</th>
+                <th>Estado</th>
             </tr>
         </tfoot> 
                   </table> 
@@ -424,8 +425,8 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
           "ordering": true,
           "info": true,
           "autoWidth": false,
-          "order": [[ 6, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
-          "order": [[ 3, "desc" ]]
+          "order": [[ 7, "desc" ],[ 0, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
+          
 })
 
 // Extend dataTables search
@@ -434,7 +435,7 @@ $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min  = $('#min-date').val();
         var max  = $('#max-date').val();
-        var createdAt = data[6] || 0; // Our date column in the table
+        var createdAt = data[7] || 0; // Our date column in the table
      
         
 //alert(" Fecha escojo "+min+ " Fecha busco "+createdAt);
