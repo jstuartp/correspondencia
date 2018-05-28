@@ -350,8 +350,8 @@ table =$('#example2').DataTable({
           "info": true,
           "autoWidth": false,
           //"scrollY": 400
-           "order": [[ 0, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
-          "order": [[ 4, "desc" ]] 
+           "order": [[ 3, "desc" ],[0,"desc"]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
+          
         })
       // Extend dataTables search
 
