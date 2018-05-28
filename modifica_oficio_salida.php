@@ -134,7 +134,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Área de TI | Administración de sitio
+            Oficios Salida | Modifica Oficios
             <?php echo $config['nombre_institucion'];?>   <!-- LLAMADO DEL TITULO UNIDAD PEQUEÑO -->
           </h1>
           <ol class="breadcrumb">
