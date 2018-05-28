@@ -229,7 +229,7 @@ echo EliminaEstadoOficioBloqueado( $el_oficio);
               <?php echo $config['nombre_institucion'];?>   <!-- LLAMADO DEL TITULO UNIDAD PEQUEÑO -->
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Principal</a></li>
+              <li><a href="bien.php"><i class="fa fa-dashboard"></i> Principal</a></li>
             <li><a href="listado_oficios_entrada_jefatura.php">Listado de Oficios</a></li>
             <li class="active">Detalle Oficio</li>
           </ol>
