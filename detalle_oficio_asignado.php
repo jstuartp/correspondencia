@@ -247,7 +247,7 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
              <?php echo $config['nombre_institucion'];?>   <!-- LLAMADO DEL TITULO UNIDAD PEQUEÑO -->
           </h1>
           <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Principal</a></li>
+              <li><a href="bien.php"><i class="fa fa-dashboard"></i> Principal</a></li>
             <li><a href="oficios_asignados.php">Listado oficios asignados</a></li>
             <li class="active">Detalle Oficio Asignado</li>
           </ol>
