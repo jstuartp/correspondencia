@@ -49,14 +49,16 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                         //de damos permisos 777
                         chmod($nombre_nuevo_con_carpeta,0777);// este hay que comentarlo a la hora de pasarlo a produccion
 
+//extrae el anio de la fecha
+$yer_of_date= date('Y', strtotime($_POST['fecha']));                        
 //Obtiene el nuevo ID                        
-$newId = $_daoInfoOficios->GetInfoOficiosUltimoId2ByYear($_POST['anno']);
+$newId = $_daoInfoOficios->GetInfoOficiosUltimoId2ByYear($yer_of_date);
 
 $insertSQL = sprintf("INSERT into info_oficios (oficio_id2, fecha, anno, no_oficio, asunto, unidad_entidad, remitente, destinatario_in, usuario_inserta, tipo_oficio, observaciones, imagen, extension_archivos, "
         . "id_estado, usuario_modifica) Values ( %s, %s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)", 
                GetSQLValueString($newId, "int"),       
                GetSQLValueString($_POST['fecha'], "date"), // despues de este insertar nuevos campos recordar!!!
-               GetSQLValueString($_POST['anno'], "date"),
+               GetSQLValueString($yer_of_date, "date"),
                GetSQLValueString($_POST['no_oficio'], "text"),
                GetSQLValueString($_POST['asunto'], "text"),
                GetSQLValueString($_POST['unidad_entidad'], "text"),
