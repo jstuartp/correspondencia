@@ -123,19 +123,6 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                 </div><!-- /.box-header -->
 
                 <div class="box-body">
-                    <label for="">Buscar Fechas </label>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Desde:</td>                        
-                                <td><input type="date" id="min-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Desde:"></td>
-                            </tr>
-                            <tr>
-                                <td>Hasta:</td>
-                                <td><input type="date" id="max-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Hasta:"></td>
-                            </tr>
-                        </tbody>
-                    </table>
                     <br><br>
                     <table id="example2" class="table table-bordered table-hover">
                     <thead>
@@ -453,30 +440,11 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
 
     <!-- page script -->
     <script>
-   /*   $(function () {
-
-        $('#example2').DataTable({
-          "paging": true,
-          "lengthChange": true,
-          "searching": true,
-          "ordering": true,
-          "info": true,
-          "autoWidth": false,
-          "order": [[ 0, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
-          "order": [[ 3, "desc" ]]
-    //{ "orderData": [ 0, 1 ] },
-   // { "orderData": 0, },
-   // { "orderData": [ 2, 3, 4 ] },
-        });
-      });*/
-
-// Assign moment to global namespace
-//window.moment = require('../js/moment');
-//var moment = require('js/moment');
-//moment().format('MM-DD-YYYY');
+ 
 
 // Set up your table
 table = $('#example2').DataTable({
+    "language":{"search": "Buscar palabra clave"},
    "paging": true,
           "lengthChange": true,
           "searching": true,
@@ -485,61 +453,7 @@ table = $('#example2').DataTable({
           "autoWidth": false,
           "order": [[ 5, "desc" ],[0,"desc"]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
           
-})
-
-// Extend dataTables search
-
-$.fn.dataTable.ext.search.push(
-    function( settings, data, dataIndex ) {
-        var min  = $('#min-date').val();
-        var max  = $('#max-date').val();
-        var createdAt = data[5] || 0; // Our date column in the table
-     
-        
-//alert(" Fecha escojo "+min+ " Fecha busco "+createdAt);
-//alert("Iguales? "+moment(createdAt).isSameOrAfter(min));
-
-     //   alert(min+" -- "+createdAt+" -- "+max);
-     //   alert(moment(createdAt).isSameOrAfter(min));
-        if  ( 
-               ( min === "" || max === "" )
-               || 
-                ( moment(createdAt).isSameOrAfter(min) && moment(createdAt).isSameOrBefore(max) ) 
-            )
-        {
-           // alert("cumplio");
-            return true;
-        }
-        //alert(min+" -- "+createdAt+" -- "+max);
-        //alert('es igual o despues'+moment(createdAt).isSameOrAfter(min));
-        //alert('es igual o antes'+moment(createdAt).isSameOrBefore(max));
-       // alert("fallo");
-        return false;
-    }
-);
-
-// Re-draw the table when the a date range filter changes
-$('.date-range-filter').change( function() {
-   // alert("flag6 to draw");
-    table.draw();
-} );
-
-//$('#example2_filter').hide();
-
-
-
- /*
-$(document).ready(function() {
-    var table = $('#example2').DataTable();
-     
-    // Event listener to the two range filtering inputs to redraw on input
-    $('#min, #max').keyup( function() {
-        table.draw();
-    } );
-} );*/
-      
-      
-      
+});   
       
     </script>
 
