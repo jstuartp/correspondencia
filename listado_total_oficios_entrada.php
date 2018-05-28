@@ -144,24 +144,9 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                 </div><!-- /.box-header -->
                 <div class="row">
                 <div class="col-md-8" >
-                  <label for="">Buscar Fechas </label>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Desde:</td>                        
-                                <td><input type="date" id="min-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Desde:"></td>
-                            </tr>
-                            <tr>
-                                <td>Hasta:</td>
-                                <td><input type="date" id="max-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Hasta:"></td>
-                            </tr>
-                        </tbody>
-                    </table>  <br>
+                 <br>
                     </div>
-                    <div class="col-md-4"><span class="pull-right">
-                            <a class="btn btn-primary " href="listado_total_oficios_entradaDetalles.php<?php if($_GET){echo ("?anno=".$_GET['anno']);} ?>" id="detalle" ><i class="fa fa-plus"></i> Busqueda con detalles</a> </span>
-                        
-                    </div>
+
                     
                     <br>
                 </div>
@@ -419,6 +404,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
     <script >
 
   table = $('#example2').DataTable({
+      "language":{"search": "Buscar palabra clave"},
    "paging": true,
           "lengthChange": true,
           "searching": true,
