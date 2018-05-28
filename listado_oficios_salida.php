@@ -483,8 +483,8 @@ table = $('#example2').DataTable({
           "ordering": true,
           "info": true,
           "autoWidth": false,
-          "order": [[ 0, "desc" ]], // orden de los resultados primero columna 0 los IN y luego por año columna 3
-          "order": [[ 3, "desc" ]]
+          "order": [[ 5, "desc" ],[0,"desc"]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
+          
 })
 
 // Extend dataTables search
