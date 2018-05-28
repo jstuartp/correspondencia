@@ -110,8 +110,11 @@ $ultimo_oficio_insertado= $row_DatosOficios['el_maximo_id'];
                 </div>
 
                  <div class="row col-md-6" align="center">
-                  <div class="col-sm-6"><a href="imprime_oficio_salida.php?oficio_id=<?php echo  ObtenerOficioIdImprimir ($ultimo_oficio_insertado); ?>" target="_blank" ><div class="col-md-6"><i class="fa fa-print fa-3x" ></i><br>Imprimir PDF</div></a> </div>
-                  <div class="col-sm-6"><button class="btn btn-info botonCopiar">Copiar Número de Oficio</button></div>
+                  <div class="col-md-4"><a href="imprime_oficio_salida.php?oficio_id=<?php echo  ObtenerOficioIdImprimir ($ultimo_oficio_insertado); ?>" target="_blank" ><div class="col-md-6"><i class="fa fa-print fa-3x" ></i><br>Imprimir PDF</div></a> </div>
+                  
+                  <div class="col-md-4"><button class="btn btn-info botonCopiar">Copiar Número de Oficio</button></div>
+                  <div class="col-md-4"><a href="modifica_oficio_salida.php?oficio_id=<?php echo  ObtenerOficioIdImprimir ($ultimo_oficio_insertado); ?>"><button class="btn btn-info botonEditar">Editar Oficio</button></a></div>
+                 
                 </div> 
           </div><!-- /.row -->
         </section><!-- /.content -->
