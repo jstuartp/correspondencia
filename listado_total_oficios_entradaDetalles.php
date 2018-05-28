@@ -146,11 +146,6 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                 <div class="col-md-8" >
                                      
                     </div>
-                    <div class="col-md-4 " ><span class="pull-right">
-                            <a class="btn btn-primary " href="listado_total_oficios_entrada.php" id="detalle" ><i class="fa fa-plus"></i> Busqueda por rango de Fecha</a> </span>
-                        
-                    </div>
-                    
                     <br>
                 </div>
 
