@@ -2,6 +2,10 @@
 RestringirAcceso("0,1,2,3,4,5,6,7,8,9,10,11");?> <!-- accesso -->
 
 <?php
+require './detalleOficioSalida_Controller.php';
+require "DAO_InfoOficios.php";
+
+$_daoInfoOficios = new DAO_infoOficios();
 
 $el_usuario = GetSQLValueString(obtenerIdUsuario($_SESSION ['reservas_UserId']), "int");
 
@@ -31,6 +35,7 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
     $_fecha = strtotime($_POST['fecha']);
     $_anio = date('Y',$_fecha);
+
     
     //Consulta para insertar datos del oficio a la base de datos
 $insertSQL = sprintf("INSERT into info_oficios (oficio_id1, anno, destinatario, asunto, usuario_inserta, tipo_oficio, cuerpo_oficio, cc_copia, id_jefatura,fecha,remitente,unidad_entidad, id_estado) 
@@ -52,7 +57,23 @@ $insertSQL = sprintf("INSERT into info_oficios (oficio_id1, anno, destinatario, 
  //echo $insertSQL ." nombre: ". $row_DatosUsuarios['nombre']. "<br>" ;
  //$row_DatosUsuarios = mysqli_fetch_assoc($DatosUsuarios);
   $Result1 = mysqli_query($con,  $insertSQL) or die(mysqli_error($con));
-//echo "                                                        ". $insertSQL;
+
+$yer_of_date= date('Y', strtotime($_POST['fecha']));                        
+//Obtiene el nuevo ID                        
+$newId = $_daoInfoOficios->GetInfoOficiosUltimoId1ByYear($yer_of_date);
+
+
+/****************obtiene el id del registro recien ingresado****************************/
+$consultaLastId = mysqli_query($con,  "SELECT (IFNULL( MAX(oficio_id),1))as id FROM info_oficios WHERE tipo_oficio = 0 ORDER BY oficio_id DESC") or die(mysqli_error($con));
+$_consultaLastId= mysqli_fetch_assoc($consultaLastId);
+$_lasId= $_consultaLastId['id'];
+$_numOficio="FM".$newId."-".$yer_of_date;
+/***************************************************************************************/
+$observaciones="Ingresado"; //SE QUEMAN LAS OBSERVACIONES PARA LA PRIMERA VEZ QUE SE INGRESA UN OFICIO DE SALIDA
+
+$_detalleOficioSalida = new detalleOficioSalida_Controller();
+$_detalleOficioSalida->SetDetallesOficiosSalida($_lasId, $_POST['id_estado'], $_POST['usuario_inserta'], $observaciones, $_POST['fecha'], $_numOficio);
+
  $insertGoTo = "oficio_generado.php";
   if (isset($_SERVER['QUERY_STRING'])) {
     $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
