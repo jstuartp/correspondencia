@@ -135,7 +135,7 @@ seccion_direccion = 6
         <div class="box-body">
           <div class="timeline-footer">
                       
-                         <form name="ver_oficios" id="ver_oficios" method="post" action="listado_total_oficios_entrada_anno.php">
+                         <form name="ver_oficios" id="ver_oficios" method="get" action="listado_total_oficios_entrada.php">
                             <div class="form-group" >
                               <label for="sel1">Seleccione el año:</label>
                               <select class="form-control" id="anno" name="anno">
