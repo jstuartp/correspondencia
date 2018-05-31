@@ -71,10 +71,7 @@ $el_usuario = GetSQLValueString(obtenerIdUsuario($_SESSION ['reservas_UserId']),
             <small>| <?php// echo $config['nombre_institucion']; ?> </small>
               <!-- LLAMADO DEL TITULO UNIDAD PEQUEÑO -->
        <!--   </h1> -->
-          <ol class="breadcrumb">
-            <li><a href="bien.php"><i class="fa fa-dashboard"></i> Principal</a></li>
-     
-          </ol>
+
         </section>
 
         <!-- Main content -->
@@ -109,16 +106,16 @@ $el_usuario = GetSQLValueString(obtenerIdUsuario($_SESSION ['reservas_UserId']),
             </div><!-- ./col -->
             <div class="col-lg-3 col-xs-6">
               <!-- small box -->
-              <div class="small-box bg-green">
+           <!--   <div class="small-box bg-green">
                 <div class="inner">
-                  <h3><?php echo cuentaOficiosTramitados($el_usuario  ); ?> </h3>
+                  <h3><?php //echo cuentaOficiosTramitados($el_usuario  ); ?> </h3>
                   <p>Oficios Tramitados</p>
                 </div>
                 <div class="icon">
                   <i class="ion ion-ios-browsers"></i>
                 </div>
                 <a href="oficios_en_tramite.php?tipo=3" class="small-box-footer">Más Información <i class="fa fa-arrow-circle-right"></i></a>
-              </div>
+              </div> -->
             </div><!-- ./col -->
             
           </div><!-- /.row -->
@@ -137,7 +134,7 @@ $el_usuario = GetSQLValueString(obtenerIdUsuario($_SESSION ['reservas_UserId']),
       <!-- nombre en el footer para cambiar deacuerdo a la oficina WCG-->
       <footer class="main-footer">
         <div class="pull-right hidden-xs">
-          <b>Version</b> 2.0
+          <b>Version</b> 3.0
         </div>
         <strong><?php include("includes/desarrollador.php") ; ?></strong>
       </footer>
