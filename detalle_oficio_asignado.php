@@ -526,7 +526,7 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                   </div> <?php// } else if (($estado==2)/*En tramite*/or($estado==8)/*Traslado*/) 
                               //{  ?>
                   <?php //}  ?>
-       </div> 
+   <!--    </div> -->
   <br><br>
                     <div class="form-group">
                       <label for="observacion">Comentario de: | <?php echo obtenerNombre($el_usuario); ?>  </label>
@@ -534,9 +534,9 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                     </div>
 
                     <div class="alert alert-danger oculto" role="alert" id="aviso1"><span class="glyphicon glyphicon-remove" ></span> La respuesta no debe estar vacía</div>
-
-                  </table>
-                  <input name="fecha_cambios" type="hidden" id="fecha_cambios" value="<?php $date?>" />
+                    <input name="fecha_cambios" type="hidden" id="fecha_cambios" value="<?php $date?>" />
+                </form>
+                  
                   <input type="hidden" name="MM_insert" value="form1" />
                   <br>
 
