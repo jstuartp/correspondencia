@@ -271,7 +271,7 @@ echo EliminaEstadoOficioBloqueado( $el_oficio);
      
           <div class="col-md-12">
                     <div class="statistics pull-left">
-
+<!--
                         <div class="pull-left entry">
                             <span class="count"><?php echo cuentaOficiosAsignados($el_oficio);?></span>
                             <br>
@@ -284,7 +284,7 @@ echo EliminaEstadoOficioBloqueado( $el_oficio);
                             <span class="title">Usuarios en el sistema</span>
                         </div>
 
-                       
+                       -->
 
                     </div>
                     <!-- end: User statistics -->
