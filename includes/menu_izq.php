@@ -118,9 +118,9 @@ $totalRows_DatosItems = mysqli_num_rows($DatosItems);
                     <li><a href="#"><i class="fa  fa-files-o text-green"></i> Buscar Oficios de Salida</a>
                 
                         <ul class="treeview-menu">
-                            <li><a href="listado_oficios_salida.php"><i class="fa  fa-folder-open-o text-green"></i>Por Palabra Clave</a></li>
-                            <li><a href="listado_oficios_salidaFechas.php"><i class="fa  fa-folder-open-o text-green"></i>Por Rango Fechas</a></li>
-                            <li><a href="listado_oficios_salidaDetalles.php"><i class="fa  fa-folder-open-o text-green"></i>Avanzada</a></li>
+                            <li><a href="listado_oficios_salidaTodos.php?b=3"><i class="fa  fa-folder-open-o text-green"></i>Por Palabra Clave</a></li>
+                            <li><a href="listado_oficios_salidaTodos.php?b=1"><i class="fa  fa-folder-open-o text-green"></i>Por Rango Fechas</a></li>
+                            <li><a href="listado_oficios_salidaTodos.php?b=2"><i class="fa  fa-folder-open-o text-green"></i>Avanzada</a></li>
                         </ul>
                     </li>
                              <span class="label label-primary pull-right"><?php echo $row_totalEntradaGeneral ["total"]; ?></span>
@@ -144,8 +144,8 @@ $totalRows_DatosItems = mysqli_num_rows($DatosItems);
                 <li><a href="oficios_en_tramite.php?tipo=1"><i class="fa fa-circle-o text-red"></i> Oficios Asignados</a></li>
                 <span class="label label-primary pull-right"><?php echo cuentaOficiosTramite($el_usuario  ); ?>  </span>
                 <li><a href="oficios_en_tramite.php?tipo=2"><i class="fa fa-circle-o text-yellow"></i> Oficios en trámite</a></li>
-                <span class="label label-primary pull-right"><?php echo cuentaOficiosTramitados($el_usuario  ); ?>   </span>
-                <li><a href="oficios_en_tramite.php?tipo=3"><i class="fa fa-circle-o text-green"></i> Oficios tramitados</a></li>
+               <!-- <span class="label label-primary pull-right"><?php echo cuentaOficiosTramitados($el_usuario  ); ?>   </span>
+                <li><a href="oficios_en_tramite.php?tipo=3"><i class="fa fa-circle-o text-green"></i> Oficios tramitados</a></li> -->
               </ul>
             </li>
             <!-- VALIDAMOS EL NIVEL DE USUARIOS PARA JEFATURA PARA QUE PUEDA VER LOS OFICIOS A REVISAR -->
