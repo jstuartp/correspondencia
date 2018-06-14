@@ -253,7 +253,7 @@ $totalRows_TotalUsuarios = mysqli_num_rows($TotalUsuarios);
 
                                 { ?>  <h3><p> Oficio ya fue archivado: <br> Ubicación: <?php echo $row_DatosOficios['ubicacion']; ?> </h3>
 
-                              </h1>
+                              
 
 
                           <?php } else echo "";  ?>

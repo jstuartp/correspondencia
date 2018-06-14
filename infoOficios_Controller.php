@@ -1,9 +1,10 @@
 <?php
 require 'DAO_infoOficios.php';
+require 'detalleOficioSalida_Controller.php';
 
 //recibe el identificador para saber que funcion disparar
 $flag = $_GET['flag'];
-
+$b=$_POST['b'];
 
 
 //verifica la bandera y activa la funcion que corresponde
@@ -16,10 +17,13 @@ if($flag == 1){
 }else {
     if($flag == 2){
         $_infoOficiosControler = new infoOficios_Controller();   //nuevo objeto de la clase
+        $_detalleOficioSalida = new detalleOficioSalida_Controller();
         
         $_infoOficiosControler->CambiaEstadoOficioSalida($_POST['hidden_id_oficio'], $_POST['id_estado'], $_POST['resp_usuario']);
         
-        header(sprintf("Location: %s", "listado_oficios_salida.php"));
+        $_detalleOficioSalida->SetDetallesOficiosSalida($_POST['hidden_id_oficio'], $_POST['id_estado'], $_POST['id_usuario'], $_POST['resp_usuario'], $_POST['fecha_actual'],$_POST['hidden_numOficio']);
+        
+        header(sprintf("Location: %s", "listado_oficios_salidaTodos.php?b=".$b));
         
         
     }

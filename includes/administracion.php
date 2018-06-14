@@ -115,6 +115,7 @@ seccion_direccion = 6
               <li><a href="nuevo-nivel.php">Administración de niveles  </a></li>              
               <li><a href="nueva-seccion.php">Administración de secciones</a></li>
               <li><a href="nueva-jefatura.php">Administración de Jefaturas</a></li>
+              <li><a href="nuevo-unidad.php">Administración de Unidades Internas</a></li>
            <!--   <li><a href="nuevo_item_reservas.php" >Administración de salas</a></li> -->
               <li><a href="nuevo-usuario_permiso.php">Cambiar permisos para ver oficios</a></li>
             </ul>

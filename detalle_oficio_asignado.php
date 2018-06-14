@@ -27,11 +27,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1") ) {
   
  
 
-$insertSQL = sprintf("UPDATE oficios_usuario SET id_estado=%s, resp_usuario=%s, fecha_cambios=%s WHERE id_oficioin= $el_oficio and usuario_id=$el_usuario ",
+$insertSQL = sprintf("UPDATE oficios_usuario SET id_estado=%s, resp_usuario=%s, fecha_cambios=%s, recien_asigna=%s, cambio_traslado=%s WHERE id_oficioin= $el_oficio and usuario_id=$el_usuario ",
                                        
                      GetSQLValueString($_POST['id_estado'], "int"),
                      GetSQLValueString($_POST['resp_usuario'], "text"),
-                     GetSQLValueString($_POST['fecha_cambios'], "date") );
+                     GetSQLValueString($_POST['fecha_cambios'], "date"),
+                     GetSQLValueString($_POST['recien_asigna'], "int"),
+                     GetSQLValueString($_POST['cambio_traslado'], "text"));
 
   //echo $insertSQL ." nombre: ". $row_DatosUsuarios['nombre']. "<br>" ; 
  //$row_DatosUsuarios = mysqli_fetch_assoc($DatosUsuarios);
@@ -112,7 +114,7 @@ $totalRows_TotalUsuarios = mysqli_num_rows($TotalUsuarios);
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form2")) {
 
 
-$updateSQL = sprintf("UPDATE oficios_usuario SET id_oficioin=%s, usuario_id=%s, id_estado=%s,  usuario_traslada=%s, detalle_traslado=%s, fecha_traslado=%s WHERE  id_oficioin=$el_oficio  and usuario_id= $el_usuario ",
+$updateSQL = sprintf("UPDATE oficios_usuario SET id_oficioin=%s, usuario_id=%s, id_estado=%s,  usuario_traslada=%s, detalle_traslado=%s, fecha_traslado=%s, recien_asigna=%s, cambio_traslado=%s WHERE  id_oficioin=$el_oficio  and usuario_id= $el_usuario ",
                        GetSQLValueString($_POST['id_oficioin'], "int"),
                       // GetSQLValueString($_POST['observacion'], "text"),
                        //GetSQLValueString($usuarios[$i], "int"),
@@ -122,6 +124,8 @@ $updateSQL = sprintf("UPDATE oficios_usuario SET id_oficioin=%s, usuario_id=%s, 
                        GetSQLValueString($_POST['usuario_traslada'], "text"),
                        GetSQLValueString($_POST['detalle_traslado'], "text"),
                        GetSQLValueString($_POST['fecha_traslado'], "date"),
+                       GetSQLValueString($_POST['recien_asigna'], "int"),
+                       GetSQLValueString($_POST['cambio_traslado'], "text"),
                        GetSQLValueString($_POST['id_oficiousua'], "int"));
 //echo $updateSQL;
 $Result1 = mysqli_query($con, $updateSQL) or die(mysqli_error($con));
@@ -271,7 +275,7 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
 
                   <?php $el_estado = obtenerEstadoOficio($el_oficio, $el_usuario  ); /*echo ($el_estado)Agregado por stuart  */; 
 
-                      if ($el_estado == "2" )/*En tramite*/{
+                      if ($row_UsuariosAsignados['usuario_traslada']== "") /* NO EXISTE USUARIO QUE TRASLADO*/{
 
                    
                   ?>
@@ -294,42 +298,16 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                       //echo $row_UsuariosAsignados['observacion'] ;?>
                     </div><!-- /.box-body --> 
 
-                  </div> <?php } else if ($el_estado == "3" ) /*Tramitado*/ {  ?>
-
-                   <div class="box box-success box-solid">
-                    <div class="box-header with-border">
-                      <h3 class="box-title">Comentario por parte de Jefatura al oficio IN- <?php echo $row_DatosOficios['oficio_id2']."- ".$row_DatosOficios['anno']; ?></h3>  
-
-                      <div class="box-tools pull-right">
-                       
-                        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-                      </div><!-- /.box-tools -->
-                    </div><!-- /.box-header -->
-                    <div class="box-body" style="display: block;">
-
-                      <?php 
-                      /*wcg revisar para sacar el comentario de la jefa ya que no me funciona*/
-
-                    
-                      echo obtenerComentarioJefatura($el_oficio, $el_usuario  );
-
-
-                      //echo $row_UsuariosAsignados['observacion'] ;?>
-                    </div><!-- /.box-body --> 
-
-                  </div> 
-
-                </div> <?php } else if (($el_estado == "1" ) or ($el_estado == "8" )) {  ?>
-
+                  </div> <?php } else if ($row_UsuariosAsignados['usuario_traslada']!= "") /*EXISTE USUARIO QUE TRASLADO*/ {  ?>
                    <div class="box box-solid box-danger">
                     <div class="box-header with-border">
-                      
-                       <?php  if ($el_estado == "1" ) /*Asignado*/{?>
-                      <h3 class="box-title">Comentario por parte de Jefatura al oficio IN- <?php echo $row_DatosOficios['oficio_id2']."- ".$row_DatosOficios['anno']; ?></h3>  
-                         <?php } else if ($el_estado == "8" ) /*Traslado*/ { ?>
-                      <h3 class="box-title">Oficio fue trasladado por: <?php echo obtenerNombre ($row_UsuariosAsignados['usuario_traslada']); ?>  <br>Oficio IN- <?php echo $row_DatosOficios['oficio_id2']."- ".$row_DatosOficios['anno']; ?></h3> <br> <?php echo "Comentario compañero que traslada: ". $row_UsuariosAsignados['detalle_traslado'];?> 
-                       <?php } ?>
-
+                                            
+                      <h3 class="box-title">Oficio fue trasladado por: <?php echo obtenerNombre ($row_UsuariosAsignados['usuario_traslada']); ?>  <br>Fecha Traslado:-> <?php echo $row_UsuariosAsignados['fecha_traslado']; ?></h3> <br> <?php echo "Comentario compañero que traslada: ". $row_UsuariosAsignados['detalle_traslado'];?> 
+                     
+                        <div class="box-widget pull-right">
+                       
+                            <button class="btn btn-primary sacaModal" data-id-in="<?php echo $_GET['oficio_id']; ?>" data-target="#myModalTraslado">Ver Traslados  <i class="fa fa-plus"></i></button>
+                        </div>
 
                       <div class="box-tools pull-right">
                        
@@ -341,7 +319,7 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                       <?php 
                       /*wcg revisar para sacar el comentario de la jefa ya que no me funciona*/
 
-                    
+                    echo ("La jefatura dijo: ");
                       echo obtenerComentarioJefatura($el_oficio, $el_usuario  );
 
 
@@ -349,6 +327,10 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                     </div><!-- /.box-body --> 
 
                   </div> <?php } ?>
+
+
+                </div> 
+
 
 
                 </div>
@@ -365,12 +347,12 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                    <?php } else { ?>
 
                     <div class="controls controls-header pull-right">
-                        <a class="btn btn-primary " id=".$el_oficio." data-toggle="modal" data-target="#myModal"><i class="fa fa-plus"></i> Cambiar Estado Oficio</a>&nbsp;
+                        <a class="btn btn-primary modal1 " id=".$el_oficio." data-toggle="modal" ><i class="fa fa-plus"></i> Cambiar Estado Oficio</a>&nbsp;
                         
 <?php }?>
                                 
                    <?php  //if (($estado==3)/*Asignado*/ or ($estado==8)) /*Traslado*/  { ?>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal2"><i class="fa fa-plus"></i> Trasladar Oficio    </button>
+                        <button type="button" class="btn btn-primary modal2" data-toggle="modal" ><i class="fa fa-plus"></i> Trasladar Oficio    </button>
         
                   <?php// }?>
 
@@ -398,7 +380,7 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                   </div> 
       </div>
       <!-- body del modal con los datos de los usuarios para trasladar el oficio -->
-                <div class="modal-body">
+                <div class="modal-body estado">
                         <?php //echo $el_oficio;  ?>
 
                  <!-- inicio del modal -->              
@@ -441,7 +423,9 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
                                   </table>
                                   <!-- INPUTS OCULTOS PARA EL TRASLADO DEL OFICIO -->
                                   <input name="usuario_traslada" type="hidden" id="usuario_traslada" value="<?php echo $el_usuario; ?>" />
-                                  <input name="id_estado" type="hidden" id="id_estado" value="9" />
+                                  <input name="id_estado" type="hidden" id="id_estado" value="<?php echo $row_DatosOficios['id_estado']; ?>" />
+                                   <input name="recien_asigna" type="hidden" id="recien_asigna" value="1" />
+                                   <input name="cambio_traslado" type="hidden" id="cambio_traslado" value="traslado" />
                                   <input name="id_oficioin" type="hidden" id="id_oficioin" value="<?php echo $el_oficio; ?>" />
                                   <!-- <input name="observacion" type="hidden" id="observacion" value="<?php echo $el_comentario;?>" /> -->
                                   <input name="fecha_traslado" type="hidden" id="fecha_traslado" value="<?php $date ?>" />
@@ -469,7 +453,28 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
 </div>
 <!-- fin de modal que llama a grupo de usuarios para el traslado del oficio -->
 
+<!-- MODAL PARA MOSTRAR EL DETALLE DE LOS TRASLADOS-->
+<div class="modal fade" id="myModalSaca" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSaca">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-bodytabla">
+ 
 
+                
+        <!-- FIN LISTADO DE LOS USUARIOS-->
+
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- FIN DEL MODAL PARA MOSTRAR EL DETALLE DE LOS TRASLADOS-->
 
 <!-- Modal que contiene los nombres de los usuarios cambiar estado al oficio-->
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -479,7 +484,7 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         
       </div>
-      <div class="modal-body">
+      <div class="modal-body traslado">
         <?php //echo $el_oficio;  ?>
 
  <!-- inicio del modal -->
@@ -535,6 +540,13 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
 
                     <div class="alert alert-danger oculto" role="alert" id="aviso1"><span class="glyphicon glyphicon-remove" ></span> La respuesta no debe estar vacía</div>
                     <input name="fecha_cambios" type="hidden" id="fecha_cambios" value="<?php $date?>" />
+                    <input name="recien_asigna" type="hidden" id="recien_asigna" value="0" />
+                    <input name="cambio_traslado" type="hidden" id="cambio_traslado" value="cambio" />
+                    <div class="modal-footer">
+     
+        <button type="submit" class="btn btn-primary btn-block btn-flat">Cambiar Estado</button>
+        
+      </div>
                 </form>
                   
                   <input type="hidden" name="MM_insert" value="form1" />
@@ -546,11 +558,7 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
 
 
       </div>
-      <div class="modal-footer">
-     
-        <button type="submit" class="btn btn-primary btn-block btn-flat">Cambiar Estado</button>
-        </form>
-      </div>
+      
     </div>
   </div>
 </div>
@@ -739,10 +747,45 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
     <script src="dist/js/demo.js"></script>
     <!-- page script -->
 
+    
+    <script>
+
+  $('.sacaModal').on('click',function(){
+   var id = $(this).attr('data-id-in');
+    $('.modal-bodytabla').load('detalleTraslados.php?id='+id,function(){
+        $('#myModalSaca').modal({show:true});
+    });
+});
+
+
+
+$('.modal1').on('click',function(){
+   $(this).removeData('myModalSaca.modal');
+  // $('.modal-body').load($(document).body('#myModal'));
+    $('#myModal').modal({show:true});
+    
+});
+
+$('.modal2').on('click',function(){
+  
+  $(this).removeData('myModalSaca.modal');
+    $('#myModal2').modal({show:true});
+    
+});
+
+$('.close').on('click',function(){
+location.reload();    
+});
+
+
+</script>
+    
+    
      <script>
 
       function validaralta()
       {
+  //        alert("entre");
           valid = true;
         $("#aviso1").hide("slow");
         $("#aviso2").hide("slow");
@@ -759,7 +802,7 @@ $estado= obtenerEstadoOficio($el_oficio, $el_usuario  );
             valid = false;
         }
 
-
+//alert("valido");
         return valid;
       }
     </script>

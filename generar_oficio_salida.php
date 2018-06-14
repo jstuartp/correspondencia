@@ -3,7 +3,7 @@ RestringirAcceso("0,1,2,3,4,5,6,7,8,9,10,11");?> <!-- accesso -->
 
 <?php
 require './detalleOficioSalida_Controller.php';
-require "DAO_InfoOficios.php";
+require "DAO_infoOficios.php";
 
 $_daoInfoOficios = new DAO_infoOficios();
 
@@ -67,7 +67,7 @@ $newId = $_daoInfoOficios->GetInfoOficiosUltimoId1ByYear($yer_of_date);
 $consultaLastId = mysqli_query($con,  "SELECT (IFNULL( MAX(oficio_id),1))as id FROM info_oficios WHERE tipo_oficio = 0 ORDER BY oficio_id DESC") or die(mysqli_error($con));
 $_consultaLastId= mysqli_fetch_assoc($consultaLastId);
 $_lasId= $_consultaLastId['id'];
-$_numOficio="FM".$newId."-".$yer_of_date;
+$_numOficio="FM".$newId."-".$yer_of_date; //   MODIFICAR SI SE QUIERE CAMBIAR EL FORMATO DEL NUMERO DE OFICIO DE SALIDA- SERIA FM45-2018
 /***************************************************************************************/
 $observaciones="Ingresado"; //SE QUEMAN LAS OBSERVACIONES PARA LA PRIMERA VEZ QUE SE INGRESA UN OFICIO DE SALIDA
 

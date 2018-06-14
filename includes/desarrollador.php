@@ -1,1 +1,1 @@
-<small>Desarrollado por WCG |  <a href="http://www.odi.ucr.ac.cr">ODI</a></small>
+<small>Desarrollado por WCG |  <a href="http://www.odi.ucr.ac.cr">ODI</a> || Actualizado por JSP | Facultad de Medicina</small>

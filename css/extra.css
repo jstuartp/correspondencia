@@ -28,10 +28,18 @@ a.navbar-brand.center-block {
 }
 
 .login-page {
-    background: #92b6ff;
+    background: #f5f5f5;
 }
 
 .login-box-body {
-    background: rgb(51, 23, 138);
-    color: #fff;
+    background: #ffffff;
+    color: #41ade7;
+    font-size: 18px;
+}
+
+
+.encabezadoDelSistema {
+    vertical-align: middle;
+    min-height: 80px;
+    background-color: #41ade7;
 }

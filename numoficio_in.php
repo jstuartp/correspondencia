@@ -1,7 +1,7 @@
 <?php require_once('Connections/conexion.php'); 
 RestringirAcceso("0,1,2,3,4,5,6,7,8,9,10");?> <!-- accesso -->
 <?php 
-require 'DAO_InfoOficios.php';
+require 'DAO_infoOficios.php';
 
 $_daoInfoOficios = new DAO_infoOficios();
 

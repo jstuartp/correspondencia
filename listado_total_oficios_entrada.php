@@ -2,11 +2,11 @@
 RestringirAcceso("0,1,2,3,4,5,6,7,8,9,10,11");?> <!-- accesso -->
 
 <?php 
-require 'DAO_InfoOficios.php';
+require 'DAO_infoOficios.php';
 
 $_DAOInfoOficios = new DAO_infoOficios();
 
-if ($_GET){
+if (isset($_GET['anno'])){
    
            $DatosOficios = $_DAOInfoOficios->GetInfoOficiosEntradaPorAnio($_GET['anno']);    
                      
@@ -75,7 +75,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style type="text/css"> 
-
+/*
         .iframe-container {    
           padding-bottom: 60%;
           padding-top: 30px; height: 0; overflow: hidden;
@@ -90,8 +90,30 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
             width: 100%;
             height: 100%;
         }
-
+*/
     </style>
+    
+     <!-- jQuery 2.1.4 -->
+    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <!-- Bootstrap 3.3.5 -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <!-- DataTables -->
+    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- SlimScroll -->
+    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
+    <!-- FastClick -->
+    <script src="plugins/fastclick/fastclick.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/app.min.js"></script>
+    <!-- AdminLTE for demo purposes -->
+    <script src="dist/js/demo.js"></script>
+    <script src="plugins/moment/moment.js"></script>
+    <!-- page script -->
+    
+    
+    
+    
   </head>
   <body class="hold-transition skin-blue sidebar-mini">
     <div class="wrapper">
@@ -142,15 +164,44 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
 
                    ?>
                 </div><!-- /.box-header -->
-                <div class="row">
+                     <?php
+                    if(isset($_GET['b'])){
+                        if($_GET['b']=='1'){   //SI LA BUSQUEDA ES POR RANGO DE FECHAS
+                            ?> 
+                     <div class="row">
                 <div class="col-md-8" >
-                 <br>
+                     <h2><label for="">Busqueda por rango de Fechas </label> </h2>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td><h3>Desde:   </h3></td>                        
+                                <td><input type="date" id="min-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Desde:"></td>
+                                <td><h3> &nbsp; &nbsp; &nbsp; &nbsp; </h3></td>                           
+                                <td><h3>Hasta:   </h3></td>
+                                <td><input type="date" id="max-date" class="form-control  date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Hasta:"></td>
+                            </tr>
+                        </tbody>
+                    </table>  <br>
                     </div>
-
-                    
                     <br>
                 </div>
+                        <?php }
+                if($_GET['b']=='2'){  //BUSQUEDA POR DETALLES 
+                            ?> <h2>Busqueda con detalle</h2>
+                               <br><br><?php
+                        }
+                        if($_GET['b']=='3'){ //BUSQUEDA POR PALABRA CLAVE
+                            ?> <h2>Busqueda por palabra clave</h2>
+                               <br><br><?php
+                        }
+ 
+                    }
+                
+                
+                    ?>
                 <div class="box-body">
+                    
+
                     
                   <table id="example2" class="table table-bordered table-hover table-condensed">
                     <thead>
@@ -163,7 +214,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         <th>Observaciones</th>
                        <!-- <th>Ingresado</th> -->
                        <th>Fecha</th>
-                       <th hidden="true">Fecha2</th>
+                       
                        <!-- <th>Año</th> -->
 
                          <?php 
@@ -184,6 +235,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         <th>Estado</th>
                          <?php } ?>
 
+                        <th hidden="true">Fecha2</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -213,7 +265,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         <td><?php echo $row_DatosOficios["unidad_entidad"];?> </td>
                         <td> <?php echo $row_DatosOficios["observaciones"];?></td>
                         <td> <?php echo date('d-m-Y', strtotime($row_DatosOficios["fecha"]));?></td>
-                        <td hidden="true"><?php echo $row_DatosOficios["fecha"];  ?></td>
+                       
 <?php 
 /*echo("                                el usuario ".$el_usuario);  echo("                                el usuario autorizado ".$usuario_autorizado_ver);*/
                          if ( $el_usuario == $usuario_autorizado_ver)
@@ -221,7 +273,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                           ?>
                          <td> 
 
-                         <a class="btn btn-block btn-primary view-pdf" data-asunto-in="<?php echo $row_DatosOficios["asunto"];?>" data-estado="<?php 
+                         <button class="btn btn-block btn-primary view-pdf" data-asunto-in="<?php echo $row_DatosOficios["asunto"];?>" data-estado="<?php 
 
                          $el_estado = $row_DatosOficios["id_estado"];
                          
@@ -253,10 +305,14 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
 
                             echo "Este oficio fue Finalizado"; 
 
+                         } else if ($el_estado == 9) {
+
+                            echo "Sin Asignar"; 
+
                          } 
 
 
-                         ?>" data-id-in="<?php echo $row_DatosOficios["oficio_id2"];?>" data-numero-oficio-in="<?php echo $row_DatosOficios["no_oficio"];?>" data-fecha-in="<?php echo $row_DatosOficios["fecha"];?>" href="imagenes/oficios_in/<?php echo $row_DatosOficios["imagen"];?>">Ver PDF</a>      
+                         ?>" data-id-in="<?php echo $row_DatosOficios["oficio_id2"];?>" data-imagen-in="imagenes/oficios_in/<?php echo $row_DatosOficios["imagen"]; ?>" data-numero-oficio-in="<?php echo $row_DatosOficios["no_oficio"];?>" data-fecha-in="<?php echo $row_DatosOficios["fecha"];?>" >Ver PDF</button>      
   
                         </td>
                         <?php } ?>   
@@ -270,13 +326,15 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                         { 
                           ?> 
 
-                          <td> <a href="detalle_oficio_movimientos.php?oficio_id=<?php echo $row_DatosOficios["oficio_id"];?>" target="_blank" <i class="fa fa-file-pdf-o"></i></td>
+                          <td> 
+                              <button class="btn btn-primary detallesModal" data-id-in="<?php echo $row_DatosOficios["oficio_id"]; ?>" >Ver Movimientos  <i class="fa fa-plus"></i></button>
+                             <!-- <a href="detalle_oficio_movimientos.php?oficio_id=<?php// echo $row_DatosOficios["oficio_id"];?>" target="_blank" <i class="fa fa-file-pdf-o"></i></td> -->
                           </td>
                           
                           <td>  <!-- CODIGO PUESTO POR STUART -->
                               <?php //PASAR POR TODOS LOS ESTADOS PARA PONER LA IMAGEN QUE CORRESPONDA Y EL TEXTO
 
-                        if ($row_DatosOficios["id_estado"] == 1)
+                        if (($row_DatosOficios["id_estado"] == 1)||($row_DatosOficios["id_estado"] == 9))
                         {
                           ?>
                              <a href="#" class="btn label-info">
@@ -339,6 +397,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                          ?>
                               <!-- CODIGO PUESTO POR STUART -->
                           </td>
+                           <td hidden="true"><?php echo $row_DatosOficios["fecha"];  ?></td>
 
                         <?php  }?>
 
@@ -371,6 +430,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                 <th>PDF</th>
                 <th>Movimientos</th>
                 <th>Estado</th>
+                <th hidden="true">Fecha2</th>
             </tr>
         </tfoot> 
                   </table> 
@@ -384,23 +444,33 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
     
     </div><!-- ./wrapper -->
 
-    <!-- jQuery 2.1.4 -->
-    <script src="plugins/jQuery/jQuery-2.1.4.min.js"></script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="bootstrap/js/bootstrap.min.js"></script>
-    <!-- DataTables -->
-    <script src="plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="plugins/datatables/dataTables.bootstrap.min.js"></script>
-    <!-- SlimScroll -->
-    <script src="plugins/slimScroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="plugins/fastclick/fastclick.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/app.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="dist/js/demo.js"></script>
-    <script src="plugins/moment/moment.js"></script>
-    <!-- page script -->
+    <!-- MODAL PARA MOSTRAR EL DETALLE DE LOS TRASLADOS-->
+<div class="modal fade" id="detallesMyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabelSaca">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        
+      </div>
+      <div class="modal-bodytabla">
+ 
+
+                
+        <!-- FIN LISTADO DE LOS USUARIOS-->
+
+
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<!-- FIN DEL MODAL PARA MOSTRAR EL DETALLE DE LOS TRASLADOS-->
+    
+    
+    
+   
+    <?php if(isset($_GET['b'])&&($_GET['b']==3)){ ?>
     <script >
 
   table = $('#example2').DataTable({
@@ -411,7 +481,66 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
           "ordering": true,
           "info": true,
           "autoWidth": false,
-          "order": [[ 7, "desc" ],[ 0, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
+          "order": [[ 10, "desc" ],[ 0, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
+          
+});
+</script><?php } if(isset($_GET['b'])&&($_GET['b']==2)){ ?>
+<script>
+    table = $('#example2').DataTable({
+   "paging": true,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "order": [[ 10, "desc" ],[ 0, "desc" ]]
+           // orden de los resultados primero columna 0 los IN y luego por año columna 3        
+})
+    
+    
+    
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#example2 tfoot th').each( function () {
+        var title = $(this).text();
+        if((title != 'Fecha2')&&(title != 'PDF')&&(title != 'Movimientos')){
+        $(this).html( '<input type="text" size="15" placeholder="Buscar '+title+'" />' );}
+    } );
+ $('#example2 tfoot tr').appendTo('#example2 thead');
+ 
+    // DataTable
+    var table = $('#example2').DataTable();
+ 
+    // Apply the search
+    table.columns().every( function () {
+        var that = this; 
+ 
+        $( 'input', this.footer() ).on( 'keyup change', function () {
+            if ( that.search() !== this.value ) { 
+               // alert(this.value);
+                that
+                    .search( this.value )
+                    .draw();
+            }
+        } );
+    } );
+        
+} );
+
+      
+      
+    </script>
+ <?php } if(isset($_GET['b'])&&($_GET['b']==1)){ ?>
+ <script >
+
+  table = $('#example2').DataTable({
+   "paging": true,
+          "lengthChange": true,
+          "searching": true,
+          "ordering": true,
+          "info": true,
+          "autoWidth": false,
+          "order": [[ 10, "desc" ],[ 0, "desc" ]] // orden de los resultados primero columna 0 los IN y luego por año columna 3
           
 })
 
@@ -421,7 +550,7 @@ $.fn.dataTable.ext.search.push(
     function( settings, data, dataIndex ) {
         var min  = $('#min-date').val();
         var max  = $('#max-date').val();
-        var createdAt = data[7] || 0; // Our date column in the table
+        var createdAt = data[10] || 0; // Our date column in the table
      
         
 //alert(" Fecha escojo "+min+ " Fecha busco "+createdAt);
@@ -452,19 +581,39 @@ $('.date-range-filter').change( function() {
     table.draw();
 } );
 
+ </script> <?php } ?>
+
+
+<script>
+  $('.detallesModal').on('click',function(){
+   var id = $(this).attr('data-id-in');
+    $('.modal-bodytabla').load('detalleMovimientos.php?id='+id,function(){
+        $('#detallesMyModal').modal({show:true});
+    })
+});
+
+
+$('.close').on('click',function(){
+location.reload();    
+});
+
+
 </script>
+
+
 
 
     <script>
 
-(function(a){a.createModal=function(b){defaults={title:"",message:"Mensaje",closeButton:true,scrollable:false};var b=a.extend({},defaults,b);var c=(b.scrollable===true)?'style="max-height: 720px;overflow-y: auto;"':"";html='<div class="modal fade" id="myModal">';html+='<div class="modal-dialog  modal-lg">';html+='<div class="modal-content">';html+='<div class="modal-header">';html+='<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';if(b.title.length>0){html+='<h4 class="modal-title">'+b.title+"</h4>"}html+="</div>";html+='<div class="modal-body" '+c+">";html+=b.message;html+="</div>";html+='<div class="modal-footer">';if(b.closeButton===true){html+='<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>'}html+="</div>";html+="</div>";html+="</div>";html+="</div>";a("body").prepend(html);a("#myModal").modal().on("hidden.bs.modal",function(){a(this).remove()})}})(jQuery);
 
 /*
 * Here is how you use it
 */
-$(function(){    
-    $(document.body).on('click','.view-pdf',function(){ 
-        var pdf_link = $(this).attr('href');
+
+    $('.view-pdf').on('click',function(){ 
+        (function(a){a.createModal=function(b){defaults={title:"",message:"Mensaje",closeButton:true,scrollable:false};var b=a.extend({},defaults,b);var c=(b.scrollable===true)?'style="max-height: 720px;overflow-y: auto;"':"";html='<div class="modal fade" id="myModal">';html+='<div class="modal-dialog  modal-lg">';html+='<div class="modal-content">';html+='<div class="modal-header">';html+='<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>';if(b.title.length>0){html+='<h4 class="modal-title">'+b.title+"</h4>"}html+="</div>";html+='<div class="modal-body" '+c+">";html+=b.message;html+="</div>";html+='<div class="modal-footer">';if(b.closeButton===true){html+='<button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>'}html+="</div>";html+="</div>";html+="</div>";html+="</div>";a("body").prepend(html);a("#myModal").modal().on("hidden.bs.modal",function(){a(this).remove()})}})(jQuery);
+        alert('entre');
+        var pdf_link = $(this).attr('data-imagen-in');
         var estado = $(this).attr('data-estado');
         var id_in = $(this).attr('data-id-in');
         var asunto_in= $(this).attr('data-asunto-in');
@@ -479,7 +628,7 @@ $(function(){
         });
         return false;        
     });    
-})
+
 
 </script>
   </body>

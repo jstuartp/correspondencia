@@ -400,7 +400,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                     <p>Fecha de ingreso: <label id="Oficio_fecha"> </label> </p>
                   </div>             
           
- <form action="InfoOficios_Controller.php?flag=2" method="post" name="formCambiaEstado" id="formCambiaEstado" >
+ <form action="infoOficios_Controller.php?flag=2" method="post" name="formCambiaEstado" id="formCambiaEstado" >
        <div class="row">
                     <div class="col-md-4"> 
                               <label>

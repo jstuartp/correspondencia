@@ -52,15 +52,40 @@ class DAO_infoOficios {
         global $con;
         
         $query_DatosOficios = "SELECT * FROM info_oficios WHERE (tipo_oficio = 1 OR tipo_oficio = 2)  AND oficio_id = ".$id;
-       // echo $query_DatosOficios;
+     //   echo $query_DatosOficios;
         $DatosOficios = mysqli_query($con,  $query_DatosOficios) or die(mysqli_error($con));        
         return $DatosOficios;
         
     }
     
     
+    //MODIFICA UN OFICIO A PARTIR DEL ID DE ENTRADA
+    public function UpdateOficioEntrada($unidad_entidad,$anno,$destinatario,$asunto,$fecha,$no_oficio,
+            $imagen,$observaciones,$remitente,$tipo_oficio,$id){
+        global $con;
+        
+        $query = sprintf("UPDATE info_oficios "
+                . "SET unidad_entidad =%s, anno =%s ,destinatario=%s,asunto=%s,fecha=%s,no_oficio=%s,imagen=%s,observaciones=%s,"
+                . "remitente=%s,tipo_oficio=%s "
+                . "WHERE oficio_id = %s", 
+                  
+               GetSQLValueString($unidad_entidad, "text"), // despues de este insertar nuevos campos recordar!!!
+               GetSQLValueString($anno, "text"),
+               GetSQLValueString($destinatario, "text"),
+               GetSQLValueString($asunto, "text"),
+               GetSQLValueString($fecha, "date"),
+               GetSQLValueString($no_oficio, "text"),
+               GetSQLValueString($imagen, "text"),
+               GetSQLValueString($observaciones, "text"),
+               GetSQLValueString($remitente, "text"),
+               GetSQLValueString($tipo_oficio, "int"),
+               GetSQLValueString($id, "int"));
+        echo $query;
+        return $DatosOficios = mysqli_query($con,$query) or die(mysqli_error($con));    
+    }
+
     
-    
+
     //Recibe un anio especifico y devuelve todos los oficios DE ENTRADA correspondientes a ese anio
     public function GetInfoOficiosEntradaPorAnio($anio){
         global $con;
@@ -79,7 +104,7 @@ class DAO_infoOficios {
         $query = "SELECT * FROM info_oficios JOIN oficios_usuario
                     ON info_oficios.oficio_id = oficios_usuario.id_oficioin 
                     WHERE (tipo_oficio = 1 OR tipo_oficio = 2) AND ((oficios_usuario.id_estado != 5) 
-                    and (oficios_usuario.id_estado != 9)) AND oficios_usuario.usuario_id = ".$UserId;
+                    and (oficios_usuario.recien_asigna != 1)) AND oficios_usuario.usuario_id = ".$UserId;
         
         $DatosOficios = mysqli_query($con,  $query) or die(mysqli_error($con));        
         return $DatosOficios;
@@ -92,7 +117,7 @@ class DAO_infoOficios {
         
         $query = "SELECT * FROM info_oficios JOIN oficios_usuario
                     ON info_oficios.oficio_id = oficios_usuario.id_oficioin 
-                    WHERE (tipo_oficio = 1 OR tipo_oficio = 2) AND (oficios_usuario.id_estado = 9) 
+                    WHERE (tipo_oficio = 1 OR tipo_oficio = 2) AND (oficios_usuario.recien_asigna = 1) 
                     AND oficios_usuario.usuario_id = ".$UserId;
      //   echo $query;
         $DatosOficios = mysqli_query($con,  $query) or die(mysqli_error($con));        
@@ -129,6 +154,23 @@ class DAO_infoOficios {
         
     }
 
+        //Devuelve los datos de los oficios que las jefaturas aun no han asignado a un usuario especifico
+    public function GetInfoOficiosSinAsignarByUser($userId){
+        
+        global $con;
+        
+        $query = sprintf("SELECT * FROM info_oficios WHERE info_oficios.usuario_inserta = %s and info_oficios.tipo_oficio !=0 and info_oficios.id_estado=1 and info_oficios.oficio_id 
+                                NOT IN
+                                      (SELECT oficios_usuario.id_oficioin
+                                       FROM oficios_usuario)",
+        GetSQLValueString($userId, 'int'));
+        
+        $DatosOficios = mysqli_query($con,  $query) or die(mysqli_error($con));        
+        return $DatosOficios;
+        
+    }
+    
+    
     
     //Obtiene numero de filas de cualquier registro
     public function GetNumRows($datos){
@@ -143,8 +185,21 @@ class DAO_infoOficios {
         
     }
 
-    
+    //Devuelve el numero de oficio construido para un id especifico de oficios de entrada
+    public function GetNumOficioEntradaById($id){
+        global $con;
+        global $config;
+        
+        $query= sprintf("SELECT oficio_id2, anno FROM info_oficios WHERE oficio_id=%s", GetSQLValueString($id, "int"));
+        $Datos = mysqli_query($con,  $query) or die(mysqli_error($con));
+        $resultado =mysqli_fetch_assoc($Datos);
+        $numOficio = $config['nomeclatura_dependencia']."-".$resultado['oficio_id2']."-".$resultado['anno'];
+        return $numOficio;
+        
+        
+    }
 
+    
     //devuelve todos los oficios DE SALIDA presentes en la tabla oficios
     public function GetInfoOficiosSalida(){
         global $con;
@@ -180,6 +235,20 @@ class DAO_infoOficios {
         $dato = mysqli_fetch_assoc($DatosOficios);               
         return $dato['id'];
     }
+
+    //Devuelve el ultimo id1 valido mas 1, para ingresar un nuevo id a la tabla de InfoOficios - Recive como parametro el anio
+    public function GetInfoOficiosUltimoId1ByYear($year){
+        global $con;
+     
+        
+        $query_DatosOficios = sprintf("SELECT (IFNULL( MAX(oficio_id1), 1) ) as id from info_oficios where anno= ".$year." ORDER BY oficio_id DESC limit 0,1" );
+        $DatosOficios = mysqli_query($con,  $query_DatosOficios) or die(mysqli_error($con));
+        $dato = mysqli_fetch_assoc($DatosOficios);               
+        return $dato['id'];
+    }
+
+
+
     
     public function GetInfoOficiosLastId(){
         global $con;
@@ -197,7 +266,7 @@ class DAO_infoOficios {
     public function CambiaEstadoOficioSalida($idOficio,$idEstado,$Observaciones){
         global $con;
         
-        $insertSQL = sprintf("UPDATE info_Oficios SET id_estado= %s, observaciones= %s WHERE oficio_id= ".$idOficio ,
+        $insertSQL = sprintf("UPDATE info_oficios SET id_estado= %s, observaciones= %s WHERE oficio_id= ".$idOficio ,
                                        
                      GetSQLValueString($idEstado, "int"),
                      GetSQLValueString($Observaciones, "text"));

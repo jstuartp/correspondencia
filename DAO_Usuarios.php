@@ -13,15 +13,13 @@ require_once('Connections/conexion.php');
  */
 class DAO_Usuarios {
     
-    function DAO_Usuarios(){
-        
-    }
+   
     
     /*Devuelve un unico nombre de usuario del $id que se envia como parametro*/
     public function DevuelveNombre($id){
          
         global $con;
-        $consulta = "SELECT usuario FROM Usuarios WHERE usuario_id = ".$id;
+        $consulta = "SELECT usuario FROM usuarios WHERE usuario_id = ".$id;
         $_consulta = mysqli_query($con,  $consulta) or die(mysqli_error($con));
         $retorno = mysqli_fetch_assoc($_consulta);
         

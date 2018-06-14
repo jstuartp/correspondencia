@@ -572,7 +572,7 @@ function cuentaOficiosAsignados2 ($id)
                                           FROM 
                                                   oficios_usuario
                                           WHERE 
-                                                  ( ( oficios_usuario.id_estado= 9) ) and  /*LINEA MODIFICADA POR STUART*/
+                                                  ( ( oficios_usuario.recien_asigna= 1) ) and  /*LINEA MODIFICADA POR STUART*/
                                                   oficios_usuario.usuario_id  =  ".GetSQLValueString($id, "int" )." ");
   //echo $query_ConsultaFuncion;
   $ConsultaFuncion = mysqli_query($con,  $query_ConsultaFuncion) or die(mysqli_error($con));
@@ -592,7 +592,7 @@ function cuentaOficiosTramite ($id)
                                           FROM 
                                                   oficios_usuario
                                           WHERE 
-                                                  ((oficios_usuario.id_estado != 5) and (oficios_usuario.id_estado != 9)) and 
+                                                  ((oficios_usuario.id_estado != 5) and (oficios_usuario.recien_asigna = 0)) and 
                                                   oficios_usuario.usuario_id  =  ".GetSQLValueString($id, "int" )." ");
   //echo $query_ConsultaFuncion;
   $ConsultaFuncion = mysqli_query($con,  $query_ConsultaFuncion) or die(mysqli_error($con));

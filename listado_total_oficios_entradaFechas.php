@@ -2,7 +2,7 @@
 RestringirAcceso("0,1,2,3,4,5,6,7,8,9,10,11");?> <!-- accesso -->
 
 <?php 
-require 'DAO_InfoOficios.php';
+require 'DAO_infoOficios.php';
 
 $_DAOInfoOficios = new DAO_infoOficios();
 
@@ -262,7 +262,11 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
 
                             echo "Este oficio fue Finalizado"; 
 
-                         } 
+                         } else if ($el_estado == 9) {
+
+                            echo "Sin Asignar"; 
+
+                         }
 
 
                          ?>" data-id-in="<?php echo $row_DatosOficios["oficio_id2"];?>" data-numero-oficio-in="<?php echo $row_DatosOficios["no_oficio"];?>" data-fecha-in="<?php echo $row_DatosOficios["fecha"];?>" href="imagenes/oficios_in/<?php echo $row_DatosOficios["imagen"];?>">Ver PDF</a>      
@@ -285,7 +289,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                           <td>  <!-- CODIGO PUESTO POR STUART -->
                               <?php //PASAR POR TODOS LOS ESTADOS PARA PONER LA IMAGEN QUE CORRESPONDA Y EL TEXTO
 
-                        if ($row_DatosOficios["id_estado"] == 1)
+                        if (($row_DatosOficios["id_estado"] == 1)||($row_DatosOficios["id_estado"] == 9))
                         {
                           ?>
                              <a href="#" class="btn label-info">

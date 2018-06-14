@@ -28,7 +28,7 @@
     <![endif]-->
   </head>
     
-      <?php include("includes/encabezado.php"); ?>
+      <?php include("includes/encabezado1.php"); ?>
 
       <br><br><br><br>
 
@@ -39,7 +39,7 @@
         <a href="index.php"><b>Sistema de Correspondencia</b></a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
-        <p class="login-box-msg">Inicio de Sesión</p>
+          <p class="login-box-msg"><strong>Inicio de Sesión</strong></p>
         
         <form action="validar_acceso.php" name="validar_acceso" id="validar_acceso" method="post" >
           <div class="form-group has-feedback">
@@ -55,7 +55,7 @@
             <div class="col-xs-8">
               <div class="checkbox icheck">
                 <label>
-                  <input type="checkbox" name="recordar" id="recordar" value="1"> Recordarme
+                    <input type="checkbox" name="recordar" id="recordar" value="1"><strong>Recordarme</strong>
                 </label>
               </div>
             </div><!-- /.col -->

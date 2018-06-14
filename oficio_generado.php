@@ -4,6 +4,14 @@ RestringirAcceso("0,1,2,3,4,5,6,7,8,9,10");?> <!-- accesso -->
 
 $el_usuario = GetSQLValueString(obtenerIdUsuario($_SESSION ['reservas_UserId']), "int");
 
+$_idOficio;
+$_oficioAImprimir;
+
+if(isset($_GET['oficio_id'])){
+    $_idOficio =ObtenerOficioId ($_GET['oficio_id']);
+    $_oficioAImprimir = $_GET['oficio_id'];
+    
+}else{
 
 $query_DatosOficios = sprintf(" SELECT MAX(oficio_id) AS el_maximo_id
                                    FROM info_oficios " );
@@ -13,6 +21,10 @@ $totalRows_DatosOficios = mysqli_num_rows($DatosOficios);
 
 
 $ultimo_oficio_insertado= $row_DatosOficios['el_maximo_id'];
+
+$_idOficio= ObtenerOficioId ($ultimo_oficio_insertado);
+$_oficioAImprimir= ObtenerOficioIdImprimir ($ultimo_oficio_insertado);
+}
 
 ?>
 
@@ -99,7 +111,7 @@ $ultimo_oficio_insertado= $row_DatosOficios['el_maximo_id'];
                     <div class="info-box-content">
                       <span class="info-box-text">Oficio Generado</span>
                       <span class="info-box-number el_oficio texto_oficio ">
-                      <?php echo  ObtenerOficioId ($ultimo_oficio_insertado);?></span>
+                      <?php echo  $_idOficio;?></span>
                       <div class="progress">
                         <div class="progress-bar" style="width: 70%"></div>
                       </div>
@@ -110,10 +122,10 @@ $ultimo_oficio_insertado= $row_DatosOficios['el_maximo_id'];
                 </div>
 
                  <div class="row col-md-6" align="center">
-                  <div class="col-md-4"><a href="imprime_oficio_salida.php?oficio_id=<?php echo  ObtenerOficioIdImprimir ($ultimo_oficio_insertado); ?>" target="_blank" ><div class="col-md-6"><i class="fa fa-print fa-3x" ></i><br>Imprimir PDF</div></a> </div>
+                  <div class="col-md-4"><a href="imprime_oficio_salida.php?oficio_id=<?php echo  $_oficioAImprimir; ?>" target="_blank" ><div class="col-md-6"><i class="fa fa-print fa-3x" ></i><br>Imprimir PDF</div></a> </div>
                   
                   <div class="col-md-4"><button class="btn btn-info botonCopiar">Copiar Número de Oficio</button></div>
-                  <div class="col-md-4"><a href="modifica_oficio_salida.php?oficio_id=<?php echo  ObtenerOficioIdImprimir ($ultimo_oficio_insertado); ?>"><button class="btn btn-info botonEditar">Editar Oficio</button></a></div>
+                  <div class="col-md-4"><a href="modifica_oficio_salida.php?oficio_id=<?php echo  $_oficioAImprimir; ?>"><button class="btn btn-info botonEditar">Editar Oficio</button></a></div>
                  
                 </div> 
           </div><!-- /.row -->

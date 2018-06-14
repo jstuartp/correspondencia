@@ -33,12 +33,13 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1") ) {
  
 
         $insertSQL = sprintf("INSERT INTO 
-                             oficios_usuario (id_oficioin, observacion, usuario_id, id_estado) 
-                              VALUES ( %s, %s,". $usuarios[$i].", 9)",
+                             oficios_usuario (id_oficioin, observacion, usuario_id, id_estado,recien_asigna) 
+                              VALUES ( %s, %s,". $usuarios[$i].", %s,%s)",
                        
                        GetSQLValueString($el_oficio, "int"),
                        GetSQLValueString($_POST['observacion'], "text"),
-                       GetSQLValueString($_POST['id_estado'], "int"));
+                       GetSQLValueString($_POST['id_estado'], "int"),
+                       GetSQLValueString($_POST['recien_asigna'], "int"));
 
           //echo $insertSQL ." nombre: ". $row_DatosUsuarios['nombre']. "<br>" ; 
          //$row_DatosUsuarios = mysqli_fetch_assoc($DatosUsuarios);
@@ -396,7 +397,8 @@ echo EliminaEstadoOficioBloqueado( $el_oficio);
   <div class="alert alert-danger oculto" role="alert" id="aviso1"><span class="glyphicon glyphicon-remove" ></span> La observación no debe estar vacía</div>
                   
                   </table>
-                  <input type="hidden" name="id_estado" value="9" /> <!-- VALOR 9 PARA QUE APAREZCA COMO RECIEN ASIGNADO AL USUARIO  STUART-->
+                  <input type="hidden" name="id_estado" value="1" /> <!-- VALOR 9 PARA QUE APAREZCA COMO RECIEN ASIGNADO AL USUARIO  STUART-->
+                  <input type="hidden" name="recien_asigna" value="1" />
                   <input type="hidden" name="MM_insert" value="form1" />
                   <br>
 
@@ -424,7 +426,7 @@ echo EliminaEstadoOficioBloqueado( $el_oficio);
     <div class="col-md-12">
         
         <div class="embed-responsive embed-responsive-4by3">
-        <iframe class="embed-responsive-item" src="../imagenes/oficios_in/<?php echo $row_DatosOficios['imagen']; ?>"></iframe>
+        <iframe class="embed-responsive-item" src="imagenes/oficios_in/<?php echo $row_DatosOficios['imagen']; ?>"></iframe>
         </div>
     </div>
 

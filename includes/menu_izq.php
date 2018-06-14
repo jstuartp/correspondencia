@@ -126,9 +126,9 @@ $totalRows_DatosItems = mysqli_num_rows($DatosItems);
                              <span class="label label-primary pull-right"><?php echo $row_totalEntradaGeneral ["total"]; ?></span>
                <li><a href=" #"><i class="fa  fa-files-o text-green"></i> Buscar Oficios de Entrada</a>
                         <ul class="treeview-menu">
-                            <li><a href="listado_total_oficios_entrada.php"><i class="fa  fa-circle-o text-green"></i>Por Palabra Clave</a></li>
-                            <li><a href="listado_total_oficios_entradaFechas.php"><i class="fa  fa-circle-o text-green"></i>Por Rango Fechas</a></li>
-                            <li><a href="listado_total_oficios_entradaDetalles.php"><i class="fa  fa-circle-o text-green"></i>Avanzada</a></li>
+                            <li><a href="listado_total_oficios_entrada.php?b=3"><i class="fa  fa-circle-o text-green"></i>Por Palabra Clave</a></li>
+                            <li><a href="listado_total_oficios_entrada.php?b=1"><i class="fa  fa-circle-o text-green"></i>Por Rango Fechas</a></li>
+                            <li><a href="listado_total_oficios_entrada.php?b=2"><i class="fa  fa-circle-o text-green"></i>Avanzada</a></li>
                         </ul>  
                </li>
               </ul>
@@ -136,16 +136,17 @@ $totalRows_DatosItems = mysqli_num_rows($DatosItems);
               <li class="treeview">
               <a href="#">
                 <i class="fa fa-files-o"></i>
-                <span>Oficios Asignados  <?php echo $_UsuariosControler->DevuelveUsuarioDeId($el_usuario);?></span>
+                <span>Oficios  <?php echo $_UsuariosControler->DevuelveUsuarioDeId($el_usuario);?></span>
                 <span class="label pull-right bg-green "><?php// echo obtenerTotalOficiosAsignados($_SESSION['reservas_UserId']); ?></span>
               </a>
               <ul class="treeview-menu">
-              <span class="label label-primary pull-right"><?php echo cuentaOficiosAsignados2($el_usuario  ); ?> </span>
+              <span class="label label-primary pull-right"><?php echo cuentaOficiosAsignados2($el_usuario); ?> </span>
                 <li><a href="oficios_en_tramite.php?tipo=1"><i class="fa fa-circle-o text-red"></i> Oficios Asignados</a></li>
                 <span class="label label-primary pull-right"><?php echo cuentaOficiosTramite($el_usuario  ); ?>  </span>
                 <li><a href="oficios_en_tramite.php?tipo=2"><i class="fa fa-circle-o text-yellow"></i> Oficios en trámite</a></li>
                <!-- <span class="label label-primary pull-right"><?php echo cuentaOficiosTramitados($el_usuario  ); ?>   </span>
                 <li><a href="oficios_en_tramite.php?tipo=3"><i class="fa fa-circle-o text-green"></i> Oficios tramitados</a></li> -->
+                <li><a href="oficios_sin_asignar.php"><i class="fa fa-circle-o text-yellow"></i> Modificar Ingresados</a></li>
               </ul>
             </li>
             <!-- VALIDAMOS EL NIVEL DE USUARIOS PARA JEFATURA PARA QUE PUEDA VER LOS OFICIOS A REVISAR -->
@@ -179,6 +180,16 @@ $totalRows_DatosItems = mysqli_num_rows($DatosItems);
                 <li><a href="generar_oficio_salida.php"><i class="fa fa-circle-o text-yellow"></i>Generar Oficio de Salida</a></li>
               </ul>
             </li>
+            <li class="header">Sistema anterior</li>
+            <li class="treeview">
+            
+            <a href=" #"><i class="fa  fa-files-o text-green"></i> Buscar Oficios recibidos </a>
+                        <ul class="treeview-menu">
+                            <li><a href="listado_recibidos_old.php?b=3"><i class="fa  fa-circle-o text-green"></i>Por Palabra Clave</a></li>
+                            <li><a href="listado_recibidos_old.php?b=1"><i class="fa  fa-circle-o text-green"></i>Por Rango Fechas</a></li>
+                            <li><a href="listado_recibidos_old.php?b=2"><i class="fa  fa-circle-o text-green"></i>Avanzada</a></li>
+                        </ul>  
+               </li>
              
           </ul>
         </section>

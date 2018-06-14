@@ -94,7 +94,7 @@ $el_oficio = GetSQLValueString ($_GET ['oficio_id'], "int" ) ;
                                       // 0 = Apagado 
                                       // 1 = Mensaje de Cliente 
                                       // 2 = Mensaje de Cliente y Servidor 
-                                      $mail->SMTPDebug = 2; 
+                                      $mail->SMTPDebug = 0; 
                                       // Log del debug SMTP en formato HTML 
                                       $mail->Debugoutput = 'html';    
 

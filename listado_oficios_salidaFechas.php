@@ -12,9 +12,10 @@ $DatosOficios = mysqli_query($con,  $query_DatosOficios) or die(mysqli_error($co
 $row_DatosOficios  = mysqli_fetch_assoc($DatosOficios);
 $totalRows_DatosOficios = mysqli_num_rows($DatosOficios);
 */
-if ($_GET){
-        $DatosOficios = $_DAOInfoOficios->GetInfoOficiosSalidaPorAnio($_GET['anno']);    
-} else {
+
+    if(isset($_GET['anno'])){
+        $DatosOficios = $_DAOInfoOficios->GetInfoOficiosSalidaPorAnio($_GET['anno']);       
+    } else {
     
         $DatosOficios = $_DAOInfoOficios->GetInfoOficiosSalida();    
 }
@@ -123,18 +124,28 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                 </div><!-- /.box-header -->
 
                 <div class="box-body">
-                    <h2><label for="">Busqueda por rango de Fechas </label> </h2>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td><h3>Desde:   </h3></td>                        
-                                <td><input type="date" id="min-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Desde:"></td>
-                                <td><h3> &nbsp; &nbsp; &nbsp; &nbsp; </h3></td>                           
-                                <td><h3>Hasta:   </h3></td>
-                                <td><input type="date" id="max-date" class="form-control  date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Hasta:"></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <?php
+                    if(isset($_GET['b'])){
+                        if($_GET['b']=='1'){   //SI LA BUSQUEDA ES POR RANGO DE FECHAS
+                            ?> 
+                            <h2><label for="">Busqueda por rango de Fechas </label> </h2>
+                            <table>
+                                <tbody>
+                                       <tr>
+                                            <td><h3>Desde:   </h3></td>                        
+                                            <td><input type="date" id="min-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Desde:"></td>
+                                            <td><h3> &nbsp; &nbsp; &nbsp; &nbsp; </h3></td>                           
+                                            <td><h3>Hasta:   </h3></td>
+                                            <td><input type="date" id="max-date" class="form-control  date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Hasta:"></td>
+                                       </tr>
+                                </tbody>
+                            </table><?php 
+                            
+                        }
+                        
+                    }
+                    ?>
+                   
                     <br><br>
                     <table id="example2" class="table table-bordered table-hover">
                     <thead>
