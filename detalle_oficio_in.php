@@ -53,11 +53,8 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1") ) {
         $Result1 = mysqli_query($con, $updateSQL) or die(mysqli_error($con));        
                 
                 
-         $insertGoTo = "envia_correo_oficio_asignado.php";
-          if (isset($_SERVER['QUERY_STRING'])) {
-            $insertGoTo .= (strpos($insertGoTo, '?')) ? "&" : "?";
-            $insertGoTo .= $_SERVER['QUERY_STRING'];
-          }
+         $insertGoTo = "envia_correo_oficio_asignado.php?oficio_id=".$el_oficio;
+          
           header(sprintf("Location: %s", $insertGoTo));
         }
         }

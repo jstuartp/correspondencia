@@ -20,8 +20,8 @@ class DAO_recibidos_old {
     public function GetRecibidosOldByYear($anio){
         global $con;
         
-        $query_DatosOficios = "SELECT * FROM corre_recibida WHERE fecha_reci =".$anio." ORDER BY oficio_id DESC" ;
-        $DatosOficios = mysqli_query($con,  $query_DatosOficios) or die(mysqli_error($con));        
+        $query = sprintf("SELECT * FROM corre_recibida WHERE YEAR(fecha_reci) = %s ORDER BY fecha_reci DESC", GetSQLValueString($anio, "text")) ;
+        $DatosOficios = mysqli_query($con,  $query) or die(mysqli_error($con));        
         return $DatosOficios;
         
     }
@@ -55,7 +55,7 @@ class DAO_recibidos_old {
     
 
     //devuelve todos los oficios DE SALIDA presentes en la tabla oficios
-    public function GetGetRecibidosOld(){
+    public function GetRecibidosOld(){
         global $con;
      
         

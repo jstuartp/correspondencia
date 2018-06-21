@@ -35,11 +35,22 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
     $_fecha = strtotime($_POST['fecha']);
     $_anio = date('Y',$_fecha);
+$firma1='';
+$firma2='';
+$firma3 ="";
 
+    if($_POST['firmante1']!="Firma 1"){
+    $firma1 = $_POST['firmante1'].'+'.$_POST['firmante1a']; }
+    if ($_POST['firmante2']!="Firma 2"){
+    $firma2 = $_POST['firmante2'].'+'.$_POST['firmante2a'];}
+    if ($_POST['firmante3']!="Firma 3"){
+    $firma3 = $_POST['firmante3'].'+'.$_POST['firmante3a'];}
     
+   
     //Consulta para insertar datos del oficio a la base de datos
-$insertSQL = sprintf("INSERT into info_oficios (oficio_id1, anno, destinatario, asunto, usuario_inserta, tipo_oficio, cuerpo_oficio, cc_copia, id_jefatura,fecha,remitente,unidad_entidad, id_estado) 
-( SELECT (IFNULL( MAX(oficio_id1)+1, 1) ) as oficioidtemp, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s, %s from info_oficios where anno=%s ORDER BY oficio_id DESC) limit 0,1",
+$insertSQL = sprintf("INSERT into info_oficios (oficio_id1, anno, destinatario, asunto, usuario_inserta, tipo_oficio, cuerpo_oficio, 
+    cc_copia, id_jefatura,fecha,remitente,unidad_entidad, id_estado,destinatario_out,firma2,firma3) 
+( SELECT (IFNULL( MAX(oficio_id1)+1, 1) ) as oficioidtemp, %s, %s, %s, %s, %s, %s, %s, %s,%s,%s, %s, %s,%s,%s, %s from info_oficios where anno=%s ORDER BY oficio_id DESC) limit 0,1",
 
                         GetSQLValueString($_anio, "date"),
                         GetSQLValueString($_POST['destinatario'], "text"),
@@ -53,6 +64,9 @@ $insertSQL = sprintf("INSERT into info_oficios (oficio_id1, anno, destinatario, 
                         GetSQLValueString($_POST['remitente'], "text"),
                         GetSQLValueString($_POST['unidad_entidad'], "text"),
                         GetSQLValueString($_POST['id_estado'], "text"),
+                        GetSQLValueString($firma1, "text"),
+                        GetSQLValueString($firma2, "text"),
+                        GetSQLValueString($firma3, "text"),
                         GetSQLValueString($_anio, "date"));
  //echo $insertSQL ." nombre: ". $row_DatosUsuarios['nombre']. "<br>" ;
  //$row_DatosUsuarios = mysqli_fetch_assoc($DatosUsuarios);
@@ -208,7 +222,7 @@ $_detalleOficioSalida->SetDetallesOficiosSalida($_lasId, $_POST['id_estado'], $_
 					<div class="alert alert-danger oculto" role="alert" id="aviso4"><span class="glyphicon glyphicon-remove" ></span> La (as) copias no deben estar vacío</div>
 
 					<fieldset class="form-group">
-                        <h2>Jefatura que firmará el documento: (* Responsable de la firma del oficio) </h2>
+                                            <h2>Jefatura que firmará el documento: (* Responsable de la firma del oficio) </h2>  
                         <select class="form-control" name="id_jefatura" id="id_jefatura">
                               <?php //Jala las jefaturas a quienes se asignará el oficio
                         if ($totalRows_DatosDestinatarios > 0) {
@@ -225,6 +239,17 @@ $_detalleOficioSalida->SetDetallesOficiosSalida($_lasId, $_POST['id_estado'], $_
                                         <?php } ?>
                         </select>
                     </fieldset>
+                                        <fieldset class="form-group ">
+                                            <h2> Varias firmas? <input type="checkbox" class="varios" name="varios" value="ON"  /> </h2>
+                                            <div id="firmas" style="display: none">
+                                                <textarea class="form-control" rows="1"  name="firmante1" type="text" id="firmante1"  value="Firma 1">Firma 1</textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante1a" type="text" id="firmante1a"  value="Puesto firma 1">Puesto firma 1</textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante2" type="text" id="firmante2"  value="Firma 2">Firma 2</textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante2a" type="text" id="firmante2a"  value="Puesto firma 2">Puesto firma 2</textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante3" type="text" id="firmante3"  value="Firma 3">Firma 3</textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante3a" type="text" id="firmante3a"  value="Puesto firma 3">Puesto firma 3</textarea>
+                                            </div>
+                    </fieldset>                    
                     <div class="alert alert-danger oculto" role="alert" id="aviso5"><span class="glyphicon glyphicon-remove" ></span> Jefatura que firma no debe estar vacío</div>
 
                     <input name="tipo_oficio" type="hidden" id="tipo_oficio" value="0" />
@@ -274,6 +299,8 @@ $_detalleOficioSalida->SetDetallesOficiosSalida($_lasId, $_POST['id_estado'], $_
         shiftEnterMode: CKEDITOR.ENTER_P,
         entities: false
 		});
+        
+
 
         CKEDITOR.replace( 'cc_copia', {
         enterMode : CKEDITOR.ENTER_BR,
@@ -289,6 +316,21 @@ $_detalleOficioSalida->SetDetallesOficiosSalida($_lasId, $_POST['id_estado'], $_
     </script>
 
     <script>
+
+$(document).ready(function(){
+  $('.varios').on('change',function(){
+     // alert('entro');
+    if (this.checked) {
+    document.getElementById('firmas').style.display='block';
+
+     
+     
+    } else {
+     document.getElementById('firmas').style.display='none';
+    }  
+  })
+});
+
 
 function validaralta()
 {

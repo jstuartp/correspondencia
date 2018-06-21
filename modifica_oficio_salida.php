@@ -48,6 +48,17 @@ if (isset($_SERVER['QUERY_STRING'])) {
 
 if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
 
+    $firma1="";
+    $firma2="";
+    $firma3="";
+    
+    if(isset($_POST['firmante1']) && ($_POST['firmante1']!="")){
+    $firma1 = $_POST['firmante1'].'+'.$_POST['firmante1a']; }
+    if (isset($_POST['firmante2']) && ($_POST['firmante2']!="")){
+    $firma2 = $_POST['firmante2'].'+'.$_POST['firmante2a'];}
+    if (isset($_POST['firmante3']) && ($_POST['firmante3']!="")){
+    $firma3 = $_POST['firmante3'].'+'.$_POST['firmante3a'];}
+    
 
     $updateSQL= sprintf("UPDATE info_oficios
                              SET
@@ -59,6 +70,9 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                              cuerpo_oficio=%s,
                              cc_copia=%s,
                              id_jefatura=%s,
+                             destinatario_out =%s,
+                             firma2 =%s,
+                             firma3=%s,
                              usuario_inserta=%s
 
                              WHERE oficio_id = $oficio_id ",
@@ -70,8 +84,11 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
             GetSQLValueString($_POST['cuerpo_oficio'], "text"),
             GetSQLValueString($_POST['cc_copia'], "text"),
             GetSQLValueString($_POST['id_jefatura'], "int"),
+            GetSQLValueString($firma1, "text"),
+            GetSQLValueString($firma2, "text"),
+            GetSQLValueString($firma3, "text"),
             GetSQLValueString($_POST['usuario_inserta'], "int"));
-
+echo $updateSQL;
 
   $Result1 = mysqli_query($con,   $updateSQL) or die(mysqli_error($con));
 
@@ -256,7 +273,32 @@ if ((isset($_POST["MM_insert"])) && ($_POST["MM_insert"] == "form1")) {
                           <div class="alert alert-danger oculto" role="alert" id="aviso5"><span class="glyphicon glyphicon-remove" ></span> Jefatura que firma no debe estar vacío</div>
 
 
-                        <input name="usuario_inserta" type="hidden" id="usuario_inserta" value="<?php echo $el_usuario; ?>" /></td>
+                          <?php if($row_DatosOficios['destinatario_out']!=""){ 
+
+                          $firma1= array("","");
+                            $firma2= array("","");
+                            $firma3= array("","");
+
+                            
+                            $firma1 = explode("+",$row_DatosOficios['destinatario_out']);
+                            if($row_DatosOficios['firma2']!=""){
+                            $firma2 = explode("+",$row_DatosOficios['firma2']);}
+                            if($row_DatosOficios['firma3']!=""){
+                            $firma3 = explode("+",$row_DatosOficios['firma3']);} ?>
+    
+                          
+                          
+                          <h2> Varios firmantes  </h2>
+                                            <div id="firmas" >
+                                                <textarea class="form-control" rows="1"  name="firmante1" type="text" id="firmante1"  value="Firma 1"><?php echo $firma1[0];?></textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante1a" type="text" id="firmante1a"  value="Puesto firma 1"><?php echo $firma1[1];?></textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante2" type="text" id="firmante2"  value="Firma 2"><?php echo $firma2[0];?></textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante2a" type="text" id="firmante2a"  value="Puesto firma 2"><?php echo $firma2[1];?></textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante3" type="text" id="firmante3"  value="Firma 3"><?php echo $firma3[0];?></textarea>
+                                                <textarea class="form-control" rows="1"  name="firmante3a" type="text" id="firmante3a"  value="Puesto firma 3"><?php echo $firma3[1];?></textarea>
+                                            </div>
+                          <?php } ?>
+                        <input name="usuario_inserta" type="hidden" id="usuario_inserta" value="<?php echo ($el_usuario); ?>" /></td>
                         <button type="submit" class="btn btn-primary">Guardar Oficio</button>
 
                              <input type="hidden" name="MM_insert" value="form1" />

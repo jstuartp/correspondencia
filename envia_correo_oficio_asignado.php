@@ -135,7 +135,11 @@ $el_oficio = GetSQLValueString ($_GET ['oficio_id'], "int" ) ;
                                           $mail->IsHTML(true);
                                           $mail->CharSet = "utf-8"; 
                                           //$body = "<b>Mensaje de prueba favor de hacer caso omiso  </b>" .$row['nombre']." ".$row['apellido1'] ;
-                                          $body = "Usted fue asignado para atender el Oficio No.: ". "<b>" . $config['nomeclatura_dependencia']. "-". $row['oficio_id1']. "-". $row['anno']. "</b>". "<br><strong>Observaci&oacute;n de Jefatura: " . $row['observacion']. "</strong><br> Asunto: ".$row['asunto'].  "<br>Fecha de Asignado: " . $row['fecha_asignado']. "<br>". " <b> Acceder a Oficio mediante el siguiente link:</b> <a href=\"".$config['direccion_server']."/detalle_oficio_asignado.php?oficio_id=".$row['oficio_id']."  \">Ver Oficio</a><br> ";
+                                          $body = "Usted fue asignado para atender el Oficio No.: ". "<b>". $row['no_oficio']."</b>".
+                                                  "<br>Con el ID de ingreso: ". $config['nomeclatura_dependencia']."<b>"."-". $row['oficio_id2']. "-". $row['anno']. "</b>".
+                                                  "<br>Observaci&oacute;n de Jefatura: <b>" . $row['observacion']."</b>".
+                                                  "<br> Asunto: <b>".$row['asunto'].  "</b><br>Fecha de Asignado: <b>" . $row['fecha_asignado']. "</b><br>".
+                                                  " <b> Acceder a Oficio mediante el siguiente link:<b> <a href=\"".$config['direccion_server']."/detalle_oficio_asignado.php?oficio_id=".$row['oficio_id']."  \">Ver Oficio</a></b><br> ";
                                           //$mail->AddAttachment("imagenes/oficios_in/". $row['imagen'], $row['imagen']);
                                           $mail->Body = $body; 
                                           //$mail->msgHTML(file_get_contents('contenido.html'), dirname(__FILE__)); 

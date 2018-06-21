@@ -143,7 +143,13 @@ $el_oficio = GetSQLValueString ( $_GET ['oficio_id'], "int");
 
 
                                           $usuario_traslada =  obtenerNombre ($row['usuario_traslada']) ;                                                            
-                                          $body = "Oficio Trasladado por: ". $usuario_traslada." .: ". "<b> IN-" . $row['oficio_id2']. "-". $row['anno']. "</b>". "<br> Observación de Jefatura: " . $row['observacion']. "<br> Asunto: ".$row['asunto'].  "<br>Fecha de Traslado: " . $row['fecha_asignado']. "<br>". " <b> Acceder a Oficio mediante el siguiente link:</b> <a href=\"".$config['direccion_server']."detalle_oficio_asignado.php?oficio_id=".$row['oficio_id']."&usuario_id=" . $row['usuario_id']."  \">Ver Oficio</a><br> ";                                                                   
+                                          $body = "Oficio Trasladado por: ". $usuario_traslada." .: "
+                                                  . "<b>ID de Entrada: IN-" . $row['oficio_id2']. "-". $row['anno']. "</b>"
+                                                  . "<b>No. Oficio: " . $row['no_oficio']. "</b>"
+                                                  . "<br> Observación de Jefatura: " . $row['observacion']
+                                                  . "<br> Asunto: ".$row['asunto'].  "<br>Fecha de Traslado: "
+                                                  . $row['fecha_asignado']. "<br>". " <b> Acceder a Oficio mediante el siguiente link:</b> <a href=\""
+                                                  .$config['direccion_server']."detalle_oficio_asignado.php?oficio_id=".$row['oficio_id']."&usuario_id=" . $row['usuario_id']."  \">Ver Oficio</a><br> ";                                                                   
                                           $mail->AddAttachment("imagenes/oficios_in/". $row['imagen'], $row['imagen']);
                                                                        
                                           $mail->Body = $body; 

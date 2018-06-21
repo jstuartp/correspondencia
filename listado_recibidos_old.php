@@ -16,12 +16,14 @@ $row_DatosOficios  = mysqli_fetch_assoc($DatosOficios);
 $totalRows_DatosOficios = mysqli_num_rows($DatosOficios);
 */
 
-    if(isset($_GET['anno'])){
-        $DatosOficios = $_DAORecibidosOld->GetRecibidosOldByYear($_GET['anno']);       
-    } else {
+
+$_anioConsulta = $_GET['anno'];
+
+
+$DatosOficios = $_DAORecibidosOld->GetRecibidosOldByYear($_anioConsulta);       
+
     
-        $DatosOficios = $_DAORecibidosOld->GetGetRecibidosOld();    
-}
+
 
 $row_DatosOficios = $_DAORecibidosOld->GetArrayDatos($DatosOficios);
 $totalRows_DatosOficios = $_DAORecibidosOld->GetNumRows($DatosOficios);
@@ -108,7 +110,7 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Oficios de Salida
+            Oficios Recibidos Historicos
             <?php echo $config['nombre_institucion'];?>   <!-- LLAMADO DEL TITULO UNIDAD PEQUEÑO -->
           </h1>
           <ol class="breadcrumb">
@@ -123,10 +125,40 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
             <div class="col-xs-12">
               <div class="box">
                 <div class="box-header"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span>
-                  <h3 class="box-title">Listado Oficios Años Anteriores</h3>
+                  <h3 class="box-title">Listado Oficios Recibidos Años Anteriores</h3>
                 </div><!-- /.box-header -->
 
                 <div class="box-body">
+                                         <div class="row">
+                        <div class="col-md-4">
+                             <h1>Mostrando resultados del año <?php echo $_anioConsulta; ?></h1>
+                              <table>
+                                <tbody>
+                                       <tr>
+                                            <td> <h2>Si desea ver años anteriores favor escojer...</h2></td>                        
+                                            <td><select style="width:120px" class="form-control anio" name="anio" data-b-in="<?php echo($_GET['b']); ?>" id="tipo_oficio" >
+                                                                <option selected="true" disabled="disabled"><?php echo $_anioConsulta; ?></option>
+                                                                <option value="2009" >2009</option>
+                                                                <option value="2010" >2010</option>
+                                                                <option value="2011" >2011</option>
+                                                                <option value="2012" >2012</option>                                
+                                                                <option value="2013" >2013</option>
+                                                                <option value="2014" >2014</option>
+                                                                <option value="2015" >2015</option>
+                                                                <option value="2016" >2016</option>
+                                                                <option value="2017" >2017</option>
+                                                                <option value="2018" >2018</option>
+                                                            </select></td>
+                                       </tr>
+                                </tbody> </table>
+                      
+
+                             <br><br>
+                         </div>
+                     </div>
+                    
+                    
+                    
                     <?php
                     if(isset($_GET['b'])){
                         if($_GET['b']=='1'){   //SI LA BUSQUEDA ES POR RANGO DE FECHAS
@@ -135,11 +167,11 @@ $usuario_autorizado_ver = GetSQLValueString(obtenerUsuarioAutorizadoVer($_SESSIO
                             <table>
                                 <tbody>
                                        <tr>
-                                            <td><h3>Desde:   </h3></td>                        
-                                            <td><input type="date" id="min-date" class="form-control date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Desde:"></td>
+                                            <td><h3>Desde:   </h3></td>       <?php  $_fecha1 = strtotime("01/01/".$_anioConsulta) ;  $_anio1 = date('Y-m-d',$_fecha1);  ?>                 
+                                            <td><input type="date" id="min-date" class="form-control date-range-filter" value="<?php echo $_anio1;?>" data-date-format="dd-mm-yyyy" placeholder="Desde:"></td>
                                             <td><h3> &nbsp; &nbsp; &nbsp; &nbsp; </h3></td>                           
-                                            <td><h3>Hasta:   </h3></td>
-                                            <td><input type="date" id="max-date" class="form-control  date-range-filter" data-date-format="dd-mm-yyyy" placeholder="Hasta:"></td>
+                                            <td><h3>Hasta:   </h3></td> <?php  $_fecha2 = strtotime("12/31/".$_anioConsulta);  $_anio2 = date('Y-m-d',$_fecha2);  ?>
+                                            <td><input type="date" id="max-date" class="form-control  date-range-filter" value="<?php echo $_anio2;?>" data-date-format="dd-mm-yyyy" placeholder="Hasta:"></td>
                                        </tr>
                                 </tbody>
                             </table><?php 
@@ -553,7 +585,14 @@ $(".change").click(function(e) {
 
 
 </script>
+<script>
+$(".anio").on('change',function(){
+    var anio = $(this).val();
+    var b = $(this).attr('data-b-in');
+   location.href ="listado_recibidos_old.php?anno="+anio+"&b="+b;
+});
 
+</script>
  
 
 

@@ -84,7 +84,7 @@ $_oficioAImprimir= ObtenerOficioIdImprimir ($ultimo_oficio_insertado);
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Oficios de Entrada
+            Oficios del Sistema 
             <?php echo $config['nombre_institucion'];?>  <!-- LLAMADO DEL TITULO UNIDAD PEQUEÑO -->
           </h1>
           <ol class="breadcrumb">

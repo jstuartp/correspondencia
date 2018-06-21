@@ -183,11 +183,19 @@ $totalRows_DatosItems = mysqli_num_rows($DatosItems);
             <li class="header">Sistema anterior</li>
             <li class="treeview">
             
-            <a href=" #"><i class="fa  fa-files-o text-green"></i> Buscar Oficios recibidos </a>
+                <a href=" #"> <i class="fa  fa-files-o text-green"></i><span>Buscar Oficios recibidos  </span></a>
                         <ul class="treeview-menu">
-                            <li><a href="listado_recibidos_old.php?b=3"><i class="fa  fa-circle-o text-green"></i>Por Palabra Clave</a></li>
-                            <li><a href="listado_recibidos_old.php?b=1"><i class="fa  fa-circle-o text-green"></i>Por Rango Fechas</a></li>
-                            <li><a href="listado_recibidos_old.php?b=2"><i class="fa  fa-circle-o text-green"></i>Avanzada</a></li>
+                            <li><a href="listado_recibidos_old.php?anno=2018&b=3"><i class="fa  fa-circle-o text-green"></i>Por Palabra Clave</a></li>
+                            <li><a href="listado_recibidos_old.php?anno=2018&b=1"><i class="fa  fa-circle-o text-green"></i>Por Rango Fechas</a></li>
+                            <li><a href="listado_recibidos_old.php?anno=2018&b=2"><i class="fa  fa-circle-o text-green"></i>Avanzada</a></li>
+                        </ul>
+            </li>
+            <li class="treeview">
+             <a href=" #"><i class="fa  fa-files-o text-green"></i> Buscar Oficios Enviados </a>
+                        <ul class="treeview-menu">
+                            <li><a href="listado_enviados_old.php?anno=2018&b=3"><i class="fa  fa-circle-o text-green"></i>Por Palabra Clave</a></li>
+                            <li><a href="listado_enviados_old.php?anno=2018&b=1"><i class="fa  fa-circle-o text-green"></i>Por Rango Fechas</a></li>
+                            <li><a href="listado_enviados_old.php?anno=2018&b=2"><i class="fa  fa-circle-o text-green"></i>Avanzada</a></li>
                         </ul>  
                </li>
              
