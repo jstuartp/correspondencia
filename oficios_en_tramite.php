@@ -226,10 +226,10 @@ $_daoUsuarios = new DAO_Usuarios();
                         <td> <?php echo $row_DatosOficios["unidad_entidad"];?></td>
                         <td> <?php echo $row_DatosOficios["observaciones"];?></td>
                         <td> <a class="btn btn-primary view-pdf" data-asunto-in="<?php echo $row_DatosOficios["asunto"];?>" data-id-in="<?php echo $row_DatosOficios["oficio_id2"];?>" data-numero-oficio-in="<?php echo $row_DatosOficios["no_oficio"];?>" data-fecha-in="<?php echo $row_DatosOficios["fecha"];?>" href="imagenes/oficios_in/<?php echo $row_DatosOficios["imagen"];?>">Ver PDF</a></td>
-</td>
-                        <td> <a href="detalle_oficio_asignado.php?oficio_id=<?php echo $row_DatosOficios['id_oficioin'];?>" target="_blank" ><i class="fa fa-folder-open-o"></i></td>
-</td>
-<td>  <!-- CODIGO PUESTO POR STUART -->
+                        </td>
+                        <td> <a  class="btn label-primary" href="detalle_oficio_asignado.php?oficio_id=<?php echo $row_DatosOficios['id_oficioin'];?>" target="_blank" ><span class="glyphicon glyphicon-eye-open"></span> Detalles</a></td>
+                        </td>
+                        <td>  <!-- CODIGO PUESTO POR STUART -->
                               <?php //PASAR POR TODOS LOS ESTADOS PARA PONER LA IMAGEN QUE CORRESPONDA Y EL TEXTO
 
                         if ($row_DatosOficios["id_estado"] == 1)

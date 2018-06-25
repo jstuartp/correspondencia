@@ -88,6 +88,10 @@ p {
   padding: 10px;
 }
 
+.centroS {
+	text-align: center;
+}
+
 .copias {
     width: 100%;
     text-align: left;
@@ -171,16 +175,15 @@ if ( isset($pdf) ) {
     <tr>
       <td width="50%">&nbsp;</td>
       
-      <td width="50%" align="right" ><strong> '.$dia_Oficio." de ".$meses[$mes_Oficio-1]. " de ".$row_ImprimeOficioSalida['anno'].'<br>'.$nombre_institucion.'-'.$row_ImprimeOficioSalida['oficio_id1'].'-'.$row_ImprimeOficioSalida['anno'].'</strong><br></td>
+      <td width="50%" align="right" ><strong> '.$dia_Oficio." de ".$meses[$mes_Oficio-1]. " de ".$row_ImprimeOficioSalida['anno'].'<br>'.$nombre_institucion.'-'.$row_ImprimeOficioSalida['oficio_id1'].'-'.$row_ImprimeOficioSalida['anno'].'</strong></td>
     </tr>
   </tbody>
 </table>
-</p>
-<p><br> </p> <p> </p>
+</p> 
 <p style="font-weight: bold;  font-size: 11.5pt">'.$row_ImprimeOficioSalida['destinatario'].'</p>
 
-<p>'.$row_ImprimeOficioSalida['cuerpo_oficio'].'</p> <p> <br></p>
-<br>
+<p>'.$row_ImprimeOficioSalida['cuerpo_oficio'].'</p> <p> </p>
+
 
 <p>
 <table width="105%" height="67" border="0" align="center">
@@ -201,7 +204,7 @@ if ( isset($pdf) ) {
 </p>
 
 
-<br>
+
 <p class="copias" >
 ' .$row_DatosDestinatarios['cc_copia'].'
 </p>
@@ -239,6 +242,25 @@ p {
   padding: 10px;
 }
 
+ol
+{
+	/* IE7: reset rtl list margin. (#7334) */
+	
+	/* preserved spaces for list items with text direction other than the list. (#6249,#8049)*/
+	//padding: 0 40px;
+	text-align: justify;
+}
+
+.centroS {
+	text-align: center;
+}
+
+.justifica {
+	text-align: justify;
+        margin: 0.5em;
+        padding: 10px;
+}
+
 .copias {
     width: 100%;
     text-align: left;
@@ -273,11 +295,11 @@ if ( isset($pdf) ) {
 
   // Logo en header 1
   $logo1 = "imagenes/logo_ucr_bn.jpg";
-  $pdf->image($logo1, 55, 15, 128, 50);
+  $pdf->image($logo1, 55, 15, 120, 50); //image($logo1, 55, 15, 128, 50
 
   // Logo en header 2
   $logo2 = "imagenes/acronimo_bn.jpg";
-  $pdf->image($logo2, $w-182, 28, 128, 30); //(182,28,128,23)
+  $pdf->image($logo2, $w-182, 28, 120, 30); //(182,28,128,23)
 
   // Draw a line along the header
   $y = 70;
@@ -317,21 +339,21 @@ if ( isset($pdf) ) {
 
 } 
 </script>
-<p> <table width="100%" border="0">
+ <table width="100%" border="0">
   <tbody>
     <tr>
       <td width="50%">&nbsp;</td>
       
-      <td width="50%" align="right" ><strong> '.$dia_Oficio." de ".$meses[$mes_Oficio-1]. " de ".$row_ImprimeOficioSalida['anno'].'<br>'.$nombre_institucion.'-'.$row_ImprimeOficioSalida['oficio_id1'].'-'.$row_ImprimeOficioSalida['anno'].'</strong><br></td>
+      <td width="50%" align="right" ><strong> '.$dia_Oficio." de ".$meses[$mes_Oficio-1]. " de ".$row_ImprimeOficioSalida['anno'].'<br>'.$nombre_institucion.'-'.$row_ImprimeOficioSalida['oficio_id1'].'-'.$row_ImprimeOficioSalida['anno'].'</strong></td>
     </tr>
   </tbody>
 </table>
-</p>
-<p><br> </p> <p> </p>
+
+
 <p style="font-weight: bold;  font-size: 11.5pt">'.$row_ImprimeOficioSalida['destinatario'].'</p>
 
-<p>'.$row_ImprimeOficioSalida['cuerpo_oficio'].'</p> <p> <br></p>
-<br>
+<p>'.$row_ImprimeOficioSalida['cuerpo_oficio'].'</p>
+
 
 
 <p><table width="100%" border="0" >
@@ -342,7 +364,7 @@ if ( isset($pdf) ) {
     </tr>
   </tbody>
 </table></p> 
-<br>
+
 <p class="copias" >
 ' .$row_DatosDestinatarios['cc_copia'].'
 </p>
@@ -370,7 +392,7 @@ body {
 }
 
 p {
-  text-align: justify;
+  
   margin: 0.5em;
   padding: 10px;
 }
@@ -409,11 +431,11 @@ if ( isset($pdf) ) {
 
   // Logo en header 1
   $logo1 = "imagenes/logo_ucr_bn.jpg";
-  $pdf->image($logo1, 55, 15, 128, 50);
+  $pdf->image($logo1, 55, 15, 120, 50);
 
   // Logo en header 2
   $logo2 = "imagenes/acronimo_bn.jpg";
-  $pdf->image($logo2, $w-182, 28, 128, 23);
+  $pdf->image($logo2, $w-182, 28, 120, 23);
 
   // Draw a line along the header
   $y = 70;
@@ -453,7 +475,7 @@ if ( isset($pdf) ) {
 
 } 
 </script>
-<p> <table width="100%" border="0">
+ <table width="100%" border="0">
   <tbody>
     <tr>
       <td width="50%">&nbsp;</td>
@@ -462,7 +484,7 @@ if ( isset($pdf) ) {
     </tr>
   </tbody>
 </table>
-</p>
+
 <p><br> </p> <p> </p>
 <p style="font-weight: bold;  font-size: 11.5pt">'.$row_ImprimeOficioSalida['destinatario'].'</p>
     

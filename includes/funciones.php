@@ -163,14 +163,14 @@ function obtenerNombre ($id)
 {
   global $con;
   
-  $query_ConsultaFuncion = sprintf("SELECT nombre, apellido1 FROM usuarios WHERE usuario_id =%s ",GetSQLValueString($id, "int"));
+  $query_ConsultaFuncion = sprintf("SELECT nombre, apellido1,apellido2 FROM usuarios WHERE usuario_id =%s ",GetSQLValueString($id, "int"));
   //echo $query_ConsultaFuncion;
   $ConsultaFuncion = mysqli_query($con,  $query_ConsultaFuncion) or die(mysqli_error($con));
   $row_ConsultaFuncion = mysqli_fetch_assoc($ConsultaFuncion);
   $totalRows_ConsultaFuncion = mysqli_num_rows($ConsultaFuncion);
    
 
-  return $row_ConsultaFuncion["nombre"]." ". $row_ConsultaFuncion["apellido1"];  
+  return $row_ConsultaFuncion["nombre"]." ". $row_ConsultaFuncion["apellido1"]." ". $row_ConsultaFuncion["apellido2"];  
   mysqli_free_result($ConsultaFuncion);
  
 }
